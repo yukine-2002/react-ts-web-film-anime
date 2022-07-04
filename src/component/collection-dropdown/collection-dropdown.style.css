@@ -1,0 +1,64 @@
+.disable {
+  pointer-events: none;
+}
+.dropdown {
+  position: relative;
+  transition: 1s ease-in;
+}
+.dropdown:hover .collection_dropdown {
+    visibility: visible;
+    opacity: 1;
+}
+.collection_dropdown {
+  position: absolute;
+  width: fit-content;
+  height: fit-content;
+  top: 70px;
+  left: 50%;
+  transform: translateX(-50%);
+  visibility: hidden;
+  transition: 1s ease-in;
+  opacity: 0;
+  z-index: 100;
+}
+.collection_dropdown .collection_dropdown_box {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+  flex-direction: column;
+}
+
+.collection_dropdown .collection_dropdown_box .row {
+  background-color: #242526;
+  line-height: 45px;
+}
+.collection_dropdown_box .row ul {
+  padding: 20px;
+  border-left: 1px solid rgba(255, 255, 255, 0.09);
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(180px, 1fr));
+  grid-gap: 20px;
+  background-color: rgba(19, 22, 31, 0.79);
+}
+.collection_dropdown_box .row .title {
+  width: 100%;
+  padding: 0 15px;
+  background-color: rgba(19, 22, 31, 0.79);
+}
+.collection_dropdown_box .row .title::before{
+    width: 95%;
+}
+.collection_dropdown_box .row ul li {
+  background-color: rgba(19, 22, 31, 0.79);
+  padding: 0 20px;
+  width: 100%;
+}
+.collection_dropdown_box .row ul li a {
+  padding: 0px;
+  padding: 0 20px;
+  color: #d9d9d9;
+  font-size: 17px;
+  display: block;
+}

@@ -1,24 +1,36 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Route, Routes } from "react-router-dom";
+import "./App.css";
+import mainLogo from "./assests//anime-logo-png-7-removebg-preview (1).png";
+import Header from "./component/header/header";
+import lazyLoading from "./component/lazyLoading/lazyLoading";
+import CollectionPage from "./pages/collectionpage/collectionpage";
+const HomePages = lazyLoading(() => import("./pages/homepage/homepage"));
+const WatchVideos = lazyLoading(() => import("./pages/watchvideo/watchvideo"));
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div id="main">
+      <Header />
+
+      <Routes>
+        <Route path="/" element={<HomePages />} />
+
+        <Route path="/watch">
+          <Route path=":slug/:name" element={<WatchVideos />} />
+        </Route>
+
+        <Route path="/:category">
+          <Route path=":slug" element={<CollectionPage />} />
+        </Route>
+      </Routes>
+
+      <footer>
+        <div className="copyright">@ Copyright anime 2022</div>
+        <div className="logo">
+          <img src={mainLogo} alt="" />
+        </div>
+        <div className="design">Design by Buithanh</div>
+      </footer>
     </div>
   );
 }

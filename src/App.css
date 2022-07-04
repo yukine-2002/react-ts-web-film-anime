@@ -12,14 +12,12 @@ body {
   font-family: "Open Sans", sans-serif;
 }
 .body {
-  max-width: 90vw;
+  max-width: 93vw;
   margin: auto;
 }
-
-.p-l-r {
-  padding: 10px 100px;
+.m-top-100 {
+  margin-top: 100px;
 }
-
 .m-top-50 {
   margin-top: 50px;
 }
@@ -31,17 +29,6 @@ body {
   width: 100%;
   height: 100vh;
 }
-.slider .background-main {
-  width: 100%;
-  height: 100%;
-}
-.slider .background-main img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  filter: saturate(5);
-}
-
 .title {
   font-size: 25px;
   color: #fff;
@@ -104,32 +91,6 @@ body {
   margin: 0 5px;
 }
 
-.slick-slider button.slick-next,
-.slick-slider button.slick-prev {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  border: none;
-  width: 50px;
-  height: 50px;
-  display: flex;
-  background-color: transparent;
-  justify-content: center;
-  align-items: center;
-  font-size: 20px;
-  line-height: 1;
-  z-index: 5;
-  transition: all 0.2s linear;
-}
-.slick-slider button.slick-prev {
-  left: -50px;
-  color: #fff;
-  font-size: 30px;
-  cursor: pointer;
-}
-.slick-slider button.slick-next {
-  right: -50px;
-}
 .slick-slider button.slick-prev i,
 .slick-slider button.slick-next i {
   color: #fff !important;

@@ -3,6 +3,7 @@ header {
   width: 100%;
   top: 0;
   left: 0;
+  height: 85px;
   z-index: 1000;
 }
 header .navbar {

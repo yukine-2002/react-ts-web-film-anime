@@ -4,11 +4,15 @@ import ItemSlideMovie from "../../component/itemslideMovie/itemslideMovie";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { useNavigate } from "react-router-dom";
-import { useFetchMove, useFetchRecently, useFetchRecommender, useFetchSlide } from "../../utils/useFetchSerice";
+import {
+  useFetchMove,
+  useFetchRecently,
+  useFetchRecommender,
+  useFetchSlide,
+} from "../../utils/useFetchSerice";
 import { Spinner } from "../../component/lazyLoading/lazyLoading";
 import Item from "../../component/itemslide/item";
-
-
+import ItemSliderHeader from "../../component/itemslide/item-slide-header";
 
 const settings = {
   infinite: true,
@@ -63,40 +67,62 @@ const settingSlide = {
   speed: 3000,
   slidesToShow: 1,
   slidesToScroll: 1,
-  arrows:false,
+  arrows: false,
   autoplay: true,
-  autoplaySpeed: 15000
-  
+  autoplaySpeed: 15000,
 };
 
 const HomePage = () => {
-  const nav = useNavigate()
-  const {data : recentlyData , isSuccess : isRecenLoading } = useFetchRecently()
-  const {data : RecommendedData , isSuccess : isRecommended } = useFetchRecommender()
-  const {data : MoveData , isSuccess : isMovie } = useFetchMove()
-  const {data : SlideData , isSuccess : isSlideLoading} = useFetchSlide()
-  const handlePath = (slug : string , name : string) => {
-        console.log(name)
-        nav(`/watch/${slug}/${name}`)
-  }
+  const nav = useNavigate();
+  const { data: recentlyData, isSuccess: isRecenLoading } = useFetchRecently();
+  const { data: RecommendedData, isSuccess: isRecommended } =
+    useFetchRecommender();
+  const { data: MoveData, isSuccess: isMovie } = useFetchMove();
+  const { data: SlideData, isSuccess: isSlideLoading } = useFetchSlide();
+  const handlePath = (slug: string, name: string) => {
+    console.log(name);
+    nav(`/watch/${slug}/${name}`);
+  };
   return (
     <div>
-      <div className="slider">
-        <div className="background-main">
-          <img src={slideBg} alt="" />
-        </div>
-      </div>
       <div className="body">
+        <div className="slide p-l-r m-top-100 m-bottom-50">
+          <ItemSliderHeader />
+          {/* <SlickCarousel setting={settingSlide} className="Slider-slick-sl">
+          {isSlideLoading ? (
+            SlideData.map((item) => (
+              <ItemSlideMovie
+                key={item.slug}
+                anime={item}
+                onClick={() => handlePath(item.slug, item.name)}
+              />
+            ))
+          ) : (
+            <Spinner />
+          )}
+        </SlickCarousel> */}
+        </div>
+
         <div className="trending p-l-r m-top-50 m-bottom-50">
           <div className="title m-bottom-50">
             <h3>Phim mới cập nhật</h3>
           </div>
           <div className="slick-slider-trending">
-            {isRecenLoading
-              ? recentlyData
-                  .filter((item, index) => index <= 11)
-                  .map((item) => <Item key={item.slug} anime={item} onClick={() => handlePath(item.slug,item.latestEpisode!.name )} />)
-              : <Spinner />}
+            {isRecenLoading ? (
+              recentlyData
+                .filter((item, index) => index <= 11)
+                .map((item) => (
+                  <Item
+                    key={item.slug}
+                    anime={item}
+                    onClick={() =>
+                      handlePath(item.slug, item.latestEpisode!.name)
+                    }
+                  />
+                ))
+            ) : (
+              <Spinner />
+            )}
           </div>
         </div>
 
@@ -104,44 +130,38 @@ const HomePage = () => {
           <div className="title m-bottom-50">
             <h3>Có thể bạn sẽ thích</h3>
           </div>
-              <SlickCarousel setting={settings} className="slick-slider-youlike" >
-              {
-                isRecommended ?
-                RecommendedData.map(item => <Item key={item.slug} anime={item} onClick={() => handlePath(item.slug,item.name)} />)
-                : 
-                <Spinner />
-              }
-              </SlickCarousel>
-            
+          <SlickCarousel setting={settings} className="slick-slider-youlike">
+            {isRecommended ? (
+              RecommendedData.map((item) => (
+                <Item
+                  key={item.slug}
+                  anime={item}
+                  onClick={() => handlePath(item.slug, item.name)}
+                />
+              ))
+            ) : (
+              <Spinner />
+            )}
+          </SlickCarousel>
         </div>
-        
-        <div className="slide p-l-r m-top-50 m-bottom-50">
-        <div className="title m-bottom-50">
-            <h3>Được quan tâm nhiều nhất</h3>
-          </div>
-          <SlickCarousel setting={settingSlide} className="Slider-slick-sl" >
-              {
-                isSlideLoading ?
-                SlideData.map(item => <ItemSlideMovie key={item.slug} anime={item}  onClick={() => handlePath(item.slug,item.name)} />)
-                : 
-                <Spinner />
-              }
-            </SlickCarousel>   
-        </div>
-      
+
         <div className="movie p-l-r m-top-50 m-bottom-50">
           <div className="title m-bottom-50">
             <h3>Movie</h3>
           </div>
-            <SlickCarousel setting={settings} className="slick-slider-movie" >
-              {
-                isMovie ?
-                MoveData.map(item => <ItemSlideMovie key={item.slug} anime={item}  onClick={() => handlePath(item.slug,item.name)} />)
-                : 
-                <Spinner />
-              }
-            </SlickCarousel>
-             
+          <SlickCarousel setting={settings} className="slick-slider-movie">
+            {isMovie ? (
+              MoveData.map((item) => (
+                <ItemSlideMovie
+                  key={item.slug}
+                  anime={item}
+                  onClick={() => handlePath(item.slug, item.name)}
+                />
+              ))
+            ) : (
+              <Spinner />
+            )}
+          </SlickCarousel>
         </div>
       </div>
     </div>

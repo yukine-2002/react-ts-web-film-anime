@@ -11,7 +11,7 @@ const WatchVideo = () => {
     const param  = useParams()
     const {slug,name} = param
     const { data : info  , isSuccess: isInfoLoading } = useFetchInfor(slug!);
-    console.log(info)
+   
     const filterFilm  = info?.episodes.filter((item,index) =>  item.full_name === name)[0]
     const { data: source} = useFetchSoure(
       info?.id!,

@@ -1,5 +1,4 @@
 import SlickCarousel from "../../component/slick-carousel/slick-carousel";
-import slideBg from "../../assests/violet-evergarden-zheleznaia-ruka-krov-v-profil-krasnaia-len.jpg";
 import ItemSlideMovie from "../../component/itemslideMovie/itemslideMovie";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -13,6 +12,9 @@ import {
 import { Spinner } from "../../component/lazyLoading/lazyLoading";
 import Item from "../../component/itemslide/item";
 import ItemSliderHeader from "../../component/itemslide/item-slide-header";
+import { useEffect, useState } from "react";
+import { Anime, AnimeInfo } from "../../utils/type";
+import { getInfo, getSlide, instance } from "../../utils/service";
 
 const settings = {
   infinite: true,
@@ -69,7 +71,7 @@ const settingSlide = {
   slidesToScroll: 1,
   arrows: false,
   autoplay: true,
-  autoplaySpeed: 15000,
+  autoplaySpeed: 25000,
 };
 
 const HomePage = () => {
@@ -79,28 +81,52 @@ const HomePage = () => {
     useFetchRecommender();
   const { data: MoveData, isSuccess: isMovie } = useFetchMove();
   const { data: SlideData, isSuccess: isSlideLoading } = useFetchSlide();
+  const [dataSlide, setDataSlide] = useState<AnimeInfo[]>([]);
+
+  useEffect(() => {
+    getSlide()
+      .then((response) => {
+        return response;
+      })
+      .then((data) => {
+        let fromapi = data;
+        fromapi.map((item: Anime) =>
+          getInfo(item.slug)
+            .then((response) => {
+              return response;
+            })
+            .then((data) => {
+              let data_api: AnimeInfo = data;
+              setDataSlide((oldItem) => {
+                const isEx = oldItem.find((item) => item.id === data_api.id);
+                if (isEx) {
+                  return oldItem;
+                }
+                return [...oldItem, data_api];
+              });
+            })
+        );
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
   const handlePath = (slug: string, name: string) => {
-    console.log(name);
+  
     nav(`/watch/${slug}/${name}`);
   };
   return (
     <div>
       <div className="body">
         <div className="slide p-l-r m-top-100 m-bottom-50">
-          <ItemSliderHeader />
-          {/* <SlickCarousel setting={settingSlide} className="Slider-slick-sl">
-          {isSlideLoading ? (
-            SlideData.map((item) => (
-              <ItemSlideMovie
-                key={item.slug}
-                anime={item}
-                onClick={() => handlePath(item.slug, item.name)}
-              />
-            ))
-          ) : (
-            <Spinner />
-          )}
-        </SlickCarousel> */}
+          <SlickCarousel setting={settingSlide} className="Slider-slick-sl">
+            {isSlideLoading ? (
+              dataSlide.map((item) => <ItemSliderHeader key={item.slug} item={item} />)
+            ) : (
+              <Spinner />
+            )}
+          </SlickCarousel>
         </div>
 
         <div className="trending p-l-r m-top-50 m-bottom-50">

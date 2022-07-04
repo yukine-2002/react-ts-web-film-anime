@@ -1,7 +1,7 @@
 import axios from "axios";
 import { Anime, AnimeInfo, Source } from "./type";
 
-const instance = axios.create({
+export const instance = axios.create({
     baseURL : `https://json-api-anime.herokuapp.com/api/v1`
 })
 

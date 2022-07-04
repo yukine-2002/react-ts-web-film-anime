@@ -47,9 +47,7 @@
   padding: 0 15px;
   background-color: rgba(19, 22, 31, 0.79);
 }
-.collection_dropdown_box .row .title::before{
-    width: 95%;
-}
+
 .collection_dropdown_box .row ul li {
   background-color: rgba(19, 22, 31, 0.79);
   padding: 0 20px;

@@ -136,7 +136,7 @@ const HomePage = () => {
           <div className="slick-slider-trending">
             {isRecenLoading ? (
               recentlyData
-                .filter((item, index) => index <= 11)
+                .filter((item, index) => index <= 14)
                 .map((item) => (
                   <Item
                     key={item.slug}

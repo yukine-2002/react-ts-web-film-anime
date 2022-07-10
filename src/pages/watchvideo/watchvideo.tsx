@@ -30,7 +30,7 @@ const WatchVideo = () => {
           {
               source?.videoSource? 
               <VideoPlayer source={source?.videoSource}  />
-              :  <Spinner text='Movie đang được cập nhật vui lòng trở lại sau' />
+              :  <Spinner isLoading={source?.videoSource ? true : false} text='Movie đang được cập nhật vui lòng trở lại sau' />
           }
           <div className="intro">
             <div className="title m-top-50 m-bottom-50">

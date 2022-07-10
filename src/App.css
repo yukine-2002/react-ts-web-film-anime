@@ -165,20 +165,87 @@ body {
 .slick-list {
   margin: 0 -10px;
 }
-
-footer {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #fff;
-  flex-wrap: wrap;
+footer.section {
+  margin-top: 80px;
+ 
+  padding-bottom: 80px;
+  padding-top: 80px ;
+  position: relative;
+  background-color: #282727;
 }
 
+footer a:hover {
+  color: white;
+}
 
-footer div {
-  margin: 0 10px;
-  font-weight: 800;
+footer a.logo {
+  margin-top: -2.5rem;
+  display: block;
+}
+
+footer a.logo:hover {
+  color: unset;
+}
+
+.social-list {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+  
+}
+
+.social-item {
+  --size: 30px;
+  height: 30px;
+  width: 30px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background-color: #888;
+  color: white;
+}
+
+.social-item:hover {
+  background-color: #888;
+  color: white;
+}
+
+.social-item ~ .social-item {
+  margin-left: 20px;
+}
+
+footer .content {
+  margin-top: 20px;
+}
+
+.footer-menu {
+  list-style-type: none;
+}
+
+.footer-menu a {
+  display: inline-block;
+  transition: transform 0.2s ease-in-out;
+}
+
+.footer-menu a:hover {
+  transform: translateX(5px);
+}
+
+.copyright {
+  padding: 10px;
+  border-top: 1px solid #888;
+  background-color: #888;
+  text-align: center;
+}
+footer {
+  color: white;
+}
+footer .row {
+  margin:  unset !important;
+}
+footer .container{
+  width: 90vw;
+  margin: auto;
 }
 @media screen and (max-width: 1200px) {
   .slide_content_left{

@@ -4,13 +4,11 @@ import { useLocation, useNavigate } from "react-router-dom";
 import Item from "../../component/itemslide/item";
 import { Spinner } from "../../component/lazyLoading/lazyLoading";
 import { getList } from "../../utils/service";
+import { useFetchList } from "../../utils/useFetchSerice";
 
 
 // const ALL = [...GENRES, ...RANKINGS];
-interface Props {
-  category: string;
-  slug: string;
-}
+
 
 const CollectionPage = () => {
   const nav = useNavigate();
@@ -19,20 +17,6 @@ const CollectionPage = () => {
 
   const handlePath = (slug: string, name: string) => {
     nav(`/watch/${slug}/${name}`);
-  };
-
-  const useFetchList = ({ category, slug }: Props) => {
-    const useFetch = ({ pageParam = 1 }) =>
-      getList({ category, slug, page: pageParam });
-
-    return useInfiniteQuery(["collection", slug], useFetch, {
-      getNextPageParam: (response) => {
-        if (!response.pagination) return;
-        return response.pagination.currentPage > response.pagination.totalPage
-          ? null
-          : response.pagination.currentPage + 1;
-      },
-    });
   };
 
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =

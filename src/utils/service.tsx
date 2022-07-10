@@ -26,6 +26,7 @@ interface GetListResponse {
     page: number;
   }
 
+  
 export const getSlide = async () : Promise<Anime[]> => {
     const {data} = await instance.get("/slide")
     return data.data
@@ -67,5 +68,5 @@ export const Search = async (props : SearchProps) : Promise<GetListResponse> => 
     const {data} = await instance.get('/search',{
         params : props
     })
-    return data.data
+    return data
 }

@@ -262,6 +262,9 @@ footer .container{
   .mobile .icons {
     cursor: pointer;
   }
+  .p-l-r{
+    padding: 0 20px !important;
+  }
   .mobile .icons i {
     font-size: 30px;
     font-weight: 600;
@@ -332,6 +335,13 @@ footer .container{
   }
 }
 @media screen and (max-width: 750px) {
+  .slide_content_left{
+    padding: 0 20px 0 20px !important;
+    font-size: x-small !important;
+  }
+  .slide_content_left h4 {
+    font-size: 1.5rem !important;
+  }
   .slick-slider-trending{
     position: relative;
     grid-template-columns: unset;

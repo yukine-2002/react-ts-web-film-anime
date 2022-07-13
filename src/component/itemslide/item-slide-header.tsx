@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { handlePath } from "../../utils/service";
 import { AnimeInfo } from "../../utils/type";
 
 interface typeProps {
@@ -7,9 +8,7 @@ interface typeProps {
 
 const ItemSliderHeader = ({ item }: typeProps) => {
   const nav = useNavigate();
-  const handlePath = (slug: string, name: string) => {
-    nav(`/watch/${slug}/${name}`);
-  };
+
   return (
     <div className="item_slide_header">
       <div className="item_slide_header-img">
@@ -45,7 +44,7 @@ const ItemSliderHeader = ({ item }: typeProps) => {
               <p>{item.description}</p>
             </div>
             <div className="slide_header-button">
-              <button onClick={() => handlePath(item.slug, item.name)}>
+              <button onClick={() => handlePath(nav,item.slug, item.name)}>
                 Xem ngay
               </button>
             </div>
@@ -53,7 +52,7 @@ const ItemSliderHeader = ({ item }: typeProps) => {
         </div>
         <div
           className="slide_content_btn_play"
-          onClick={() => handlePath(item.slug, item.name)}
+          onClick={() => handlePath(nav,item.slug, item.name)}
         >
           <span className="icons">
             <i className="material-icons">play_arrow</i>

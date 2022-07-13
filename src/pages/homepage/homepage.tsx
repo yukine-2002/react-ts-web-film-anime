@@ -13,22 +13,23 @@ import { Spinner } from "../../component/lazyLoading/lazyLoading";
 import Item from "../../component/itemslide/item";
 import ItemSliderHeader from "../../component/itemslide/item-slide-header";
 import { useEffect, useState } from "react";
-import { Anime, AnimeInfo } from "../../utils/type";
-import { getInfo, getSlide, instance } from "../../utils/service";
+import { Anime, AnimeInfo, AnimeLocalStorage } from "../../utils/type";
+import { getInfo, getSlide, handlePath, instance } from "../../utils/service";
 
 const settings = {
-  infinite: true,
-  slidesToShow: 5,
-  slidesToScroll: 1,
+  infinite: false,
   speed: 500,
+  slidesToShow: 6,
+  slidesToScroll: 1,
   initialSlide: 0,
+
   responsive: [
     {
       breakpoint: 1460,
       settings: {
         slidesToShow: 4,
         slidesToScroll: 1,
-        infinite: true,
+        initialSlide: 0,
       },
     },
     {
@@ -36,7 +37,7 @@ const settings = {
       settings: {
         slidesToShow: 3,
         slidesToScroll: 1,
-        infinite: true,
+        initialSlide: 0,
       },
     },
     {
@@ -44,7 +45,7 @@ const settings = {
       settings: {
         slidesToShow: 3,
         slidesToScroll: 1,
-        infinite: true,
+        initialSlide: 0,
       },
     },
     {
@@ -82,7 +83,10 @@ const HomePage = () => {
   const { data: MoveData, isSuccess: isMovie } = useFetchMove();
   const { data: SlideData, isSuccess: isSlideLoading } = useFetchSlide();
   const [dataSlide, setDataSlide] = useState<AnimeInfo[]>([]);
-
+  const listLocalStorage: Anime[] = JSON.parse(
+    localStorage.getItem("recent")!
+  );
+  console.log(listLocalStorage)
   useEffect(() => {
     getSlide()
       .then((response) => {
@@ -112,17 +116,15 @@ const HomePage = () => {
       });
   }, []);
 
-  const handlePath = (slug: string, name: string) => {
-  
-    nav(`/watch/${slug}/${name}`);
-  };
   return (
     <div>
       <div className="body">
         <div className="slide p-l-r m-top-100 m-bottom-50">
           <SlickCarousel setting={settingSlide} className="Slider-slick-sl">
             {isSlideLoading ? (
-              dataSlide.map((item) => <ItemSliderHeader key={item.slug} item={item} />)
+              dataSlide.map((item) => (
+                <ItemSliderHeader key={item.slug} item={item} />
+              ))
             ) : (
               <Spinner />
             )}
@@ -142,7 +144,7 @@ const HomePage = () => {
                     key={item.slug}
                     anime={item}
                     onClick={() =>
-                      handlePath(item.slug, item.latestEpisode!.name)
+                      handlePath(nav, item.slug, item.latestEpisode!.name)
                     }
                   />
                 ))
@@ -162,7 +164,7 @@ const HomePage = () => {
                 <Item
                   key={item.slug}
                   anime={item}
-                  onClick={() => handlePath(item.slug, item.name)}
+                  onClick={() => handlePath(nav, item.slug, item.name)}
                 />
               ))
             ) : (
@@ -170,6 +172,28 @@ const HomePage = () => {
             )}
           </SlickCarousel>
         </div>
+        {listLocalStorage ? (
+          <div className="watch p-l-r m-top-50 m-bottom-50">
+            <div className="title m-bottom-50">
+              <h3>Xem tiếp</h3>
+            </div>
+            <SlickCarousel setting={settings} className="slick-slider-watch">
+              {listLocalStorage ? (
+                listLocalStorage.map((item) => (
+                  <Item
+                  key={item.slug}
+                  anime={item}
+                  onClick={() => handlePath(nav, item.slug, item.time)}
+                />
+                ))
+              ) : (
+                <Spinner />
+              )}
+            </SlickCarousel>
+          </div>
+        ) : (
+          ""
+        )}
 
         <div className="movie p-l-r m-top-50 m-bottom-50">
           <div className="title m-bottom-50">
@@ -181,7 +205,7 @@ const HomePage = () => {
                 <ItemSlideMovie
                   key={item.slug}
                   anime={item}
-                  onClick={() => handlePath(item.slug, item.name)}
+                  onClick={() => handlePath(nav, item.slug, item.name)}
                 />
               ))
             ) : (

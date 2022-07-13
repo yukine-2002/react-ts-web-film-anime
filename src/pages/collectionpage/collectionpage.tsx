@@ -3,7 +3,7 @@ import { useInfiniteQuery } from "react-query";
 import { useLocation, useNavigate } from "react-router-dom";
 import Item from "../../component/itemslide/item";
 import { Spinner } from "../../component/lazyLoading/lazyLoading";
-import { getList } from "../../utils/service";
+import { getList, handlePath } from "../../utils/service";
 import { useFetchList } from "../../utils/useFetchSerice";
 
 
@@ -15,9 +15,7 @@ const CollectionPage = () => {
   const param = useLocation();
   const [category, slug] = param.pathname.replace("/", "").split("/");
 
-  const handlePath = (slug: string, name: string) => {
-    nav(`/watch/${slug}/${name}`);
-  };
+
 
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useFetchList({ category, slug });
@@ -38,7 +36,7 @@ const CollectionPage = () => {
               <Item
                 key={index}
                 anime={item}
-                onClick={() => handlePath(item.slug, item.latestEpisode!.name ? item.latestEpisode!.name : item.name)}
+                onClick={() => handlePath(nav,item.slug, item.latestEpisode!.name ? item.latestEpisode!.name : item.name)}
               />
             ))
           ) : (

@@ -107,7 +107,7 @@ const Header = () => {
               onChange={handleSearch}
               placeholder="search your anime"
             />
-            {search ? isSuccess ? <DropdownSearch dataSearch = {data.data} /> : <Spinner /> : ""}
+            {search ? isSuccess ? <DropdownSearch dataSearch = {data.data} /> :  <div className="dropdown_search_loading"> <Spinner /> </div> : ""}
           </div>
           <div className="button-login">
             <Link to={``}>

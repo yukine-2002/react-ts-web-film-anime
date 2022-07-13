@@ -24,6 +24,9 @@ body {
 .m-bottom-50 {
   margin-bottom: 50px;
 }
+.slick-track{
+  float: left;
+}
 .slider {
   position: relative;
   width: 100%;
@@ -256,6 +259,9 @@ footer .container{
   }
 }
 @media screen and (max-width: 940px) {
+  .slide_content_left { 
+    padding: 0 25px 0 25px !important;
+}
   .mobile {
     display: block  !important;
   }

@@ -6,12 +6,15 @@ import React, {
   useState,
 } from "react";
 import screenfull from "screenfull";
+import Store from "../../utils/Store";
+import { AnimeInfo, Source } from "../../utils/type";
 
 interface propVideo {
-  source?: string
+  info? : AnimeInfo,
+  source?: Source
 }
 
-const VideoPlayer = ({ source }: propVideo) => {
+const VideoPlayer = ({ source,info }: propVideo) => {
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [progress_bar, setProgress_bar] = useState(0);
@@ -133,6 +136,22 @@ const VideoPlayer = ({ source }: propVideo) => {
       screenfull.toggle(refContainer.current);
     }
   };
+ 
+  const storeVideo = ()=> {
+    const {thumbnail, ...rest } = info!;
+   
+    Store.update(
+      "recent",
+      { id: info?.id },
+      {
+        ...rest,
+        thumbnail: source?.thumbnail_medium,
+        time: source!.full_name,
+      }
+    );   
+
+   
+  }
 
   return (
     <div className="container" ref={refContainer}>
@@ -143,16 +162,20 @@ const VideoPlayer = ({ source }: propVideo) => {
         onMouseLeave={handleMoveLeave}
       >
         <video
+          preload="none"
+          poster={`${source?.thumbnail_medium}`}
           id="main-video"
           ref={mainVideoRef}
           onPlay={playVideo}
           onPause={pauseVideo}
+          onLoadStart={storeVideo}
           onTimeUpdate={(e) => timeUpdate(e)}
+          
           onLoadedData={(e) => {
             setDuration(e.currentTarget.duration)
           } }
-        >
-          <source src={`${source}`} type="video/mp4" />
+          playsInline>
+          <source  src={`${source?.videoSource}`} type="video/mp4" />
         </video>
 
         <div className="progressAreaTime" ref={progressAreatime}>
@@ -271,6 +294,6 @@ const VideoPlayer = ({ source }: propVideo) => {
 export default React.memo(
   VideoPlayer,
   (prevProps: propVideo, nextProps: propVideo) => {
-    return prevProps.source === nextProps.source;
+    return prevProps.source?.videoSource === nextProps.source?.videoSource;
   }
 );

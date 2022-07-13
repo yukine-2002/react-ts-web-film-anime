@@ -5,6 +5,8 @@ export const instance = axios.create({
     baseURL : `https://json-api-anime.herokuapp.com/api/v1`
 })
 
+
+
 interface GetListResponse {
     success: boolean;
     data: Anime[];
@@ -26,6 +28,10 @@ interface GetListResponse {
     page: number;
   }
 
+export const handlePath = (nav : any ,slug: string, name: string) => {
+
+    nav(`/watch/${slug}/${name}`);
+};
   
 export const getSlide = async () : Promise<Anime[]> => {
     const {data} = await instance.get("/slide")
@@ -55,7 +61,6 @@ export const getList = async ({
   const { data } = await instance.get(`/${category}/${slug}`, {
     params: rest,
   });
-
   return data;
 };
 

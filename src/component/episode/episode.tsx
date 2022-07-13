@@ -19,7 +19,7 @@ const Episode = ({ animeInfo }: propEpisode) => {
   const settings = {
     infinite: false,
     speed: 500,
-    slidesToShow: 5,
+    slidesToShow: 6,
     slidesToScroll: 1,
     initialSlide: 0,
     responsive: [
@@ -29,6 +29,7 @@ const Episode = ({ animeInfo }: propEpisode) => {
         settings: {
           slidesToShow: 4,
           slidesToScroll: 1,
+          initialSlide: 0,
         },
       },
       {
@@ -36,6 +37,7 @@ const Episode = ({ animeInfo }: propEpisode) => {
         settings: {
           slidesToShow: 3,
           slidesToScroll: 1,
+          initialSlide: 1,
         },
       },
       {
@@ -43,6 +45,7 @@ const Episode = ({ animeInfo }: propEpisode) => {
         settings: {
           slidesToShow: 3,
           slidesToScroll: 1,
+          initialSlide: 1,
         },
       },
       {
@@ -50,6 +53,7 @@ const Episode = ({ animeInfo }: propEpisode) => {
         settings: {
           slidesToShow: 2,
           slidesToScroll: 2,
+          initialSlide: 1,
         },
       },
       {
@@ -57,6 +61,7 @@ const Episode = ({ animeInfo }: propEpisode) => {
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
+          initialSlide: 1,
         },
       },
     ],

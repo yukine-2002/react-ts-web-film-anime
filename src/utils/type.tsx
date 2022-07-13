@@ -55,6 +55,21 @@ export interface AnimeInfo {
   episodes: Episodes[];
 }
 
+export interface AnimeLocalStorage {
+  id: number;
+  name: string;
+  slug: string;
+  thumbnail: string;
+  views: number;
+  genres: Genre[];
+  likes: number;
+  follows: number;
+  subTeams: string[];
+  description: string;
+  episodes: Episodes[];
+  time : string;
+}
+
 export interface Anime {
   id: number;
   name: string;

@@ -14,7 +14,8 @@ import Item from "../../component/itemslide/item";
 import ItemSliderHeader from "../../component/itemslide/item-slide-header";
 import { useEffect, useState } from "react";
 import { Anime, AnimeInfo, AnimeLocalStorage } from "../../utils/type";
-import { getInfo, getSlide, handlePath, instance } from "../../utils/service";
+import { getInfo, getSlide, handlePath, instance, rankDate } from "../../utils/service";
+import ItemRecommended from "../../component/itemslide/item-recommended";
 
 const settings = {
   infinite: false,
@@ -75,6 +76,52 @@ const settingSlide = {
   autoplaySpeed: 25000,
 };
 
+
+const settingsRcm = {
+  infinite: true,
+  slidesToShow: 4,
+  speed: 500,
+  
+  responsive: [
+    {
+      breakpoint: 1460,
+      settings: {
+        slidesToShow: 3,
+        slidesToScroll: 1,
+      },
+    },
+    {
+      breakpoint: 1260,
+      settings: {
+        slidesToShow: 3,
+        slidesToScroll: 1,
+      },
+    },
+    {
+      breakpoint: 1024,
+      settings: {
+        slidesToShow: 2,
+        slidesToScroll: 1,
+      },
+    },
+    {
+      breakpoint: 750,
+      settings: {
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        centerMode : true
+      },
+    },
+    {
+      breakpoint: 450,
+      settings: {
+        slidesToShow: 1,
+        slidesToScroll: 1
+      },
+    }
+  ],
+};
+
 const HomePage = () => {
   const nav = useNavigate();
   const { data: recentlyData, isSuccess: isRecenLoading } = useFetchRecently();
@@ -83,10 +130,13 @@ const HomePage = () => {
   const { data: MoveData, isSuccess: isMovie } = useFetchMove();
   const { data: SlideData, isSuccess: isSlideLoading } = useFetchSlide();
   const [dataSlide, setDataSlide] = useState<AnimeInfo[]>([]);
+  const [dataRecommended , setDataRecommended] = useState<AnimeInfo[]>([]);
   const listLocalStorage: Anime[] = JSON.parse(
     localStorage.getItem("recent")!
   );
-  console.log(listLocalStorage)
+  
+
+  
   useEffect(() => {
     getSlide()
       .then((response) => {
@@ -116,6 +166,27 @@ const HomePage = () => {
       });
   }, []);
 
+  useEffect(()=> {
+    rankDate().then(response => { return response}).then(data => {
+      let fromapi = data;
+      fromapi.map((item : Anime) => {
+        getInfo(item.slug)
+        .then((response) => {
+          return response;
+        })
+        .then((data) => {
+          let data_api: AnimeInfo = data;
+          setDataRecommended((oldItem) => {
+            const isEx = oldItem.find((item) => item.id === data_api.id);
+            if (isEx) {
+              return oldItem;
+            }
+            return [...oldItem, data_api];
+          });
+        })
+      })  
+    })
+  },[])
   return (
     <div>
       <div className="body">
@@ -153,10 +224,11 @@ const HomePage = () => {
             )}
           </div>
         </div>
+        
 
         <div className="youlike p-l-r m-top-50 m-bottom-50">
           <div className="title m-bottom-50">
-            <h3>Có thể bạn sẽ thích</h3>
+            <h3>Thịnh hành</h3>
           </div>
           <SlickCarousel setting={settings} className="slick-slider-youlike">
             {isRecommended ? (
@@ -172,6 +244,7 @@ const HomePage = () => {
             )}
           </SlickCarousel>
         </div>
+
         {listLocalStorage ? (
           <div className="watch p-l-r m-top-50 m-bottom-50">
             <div className="title m-bottom-50">
@@ -194,6 +267,18 @@ const HomePage = () => {
         ) : (
           ""
         )}
+        
+        <div className="recommended p-l-r m-top-50 m-bottom-50">
+          <div className="title m-bottom-50">
+              <h3>Đề xuất cho bạn</h3>
+            </div>
+            <SlickCarousel setting={settingsRcm} className="slick-slider-recommender">
+              {
+                dataRecommended.map(item => <ItemRecommended key={item.slug} item={item} />)
+              }
+            </SlickCarousel>
+        </div>
+
 
         <div className="movie p-l-r m-top-50 m-bottom-50">
           <div className="title m-bottom-50">

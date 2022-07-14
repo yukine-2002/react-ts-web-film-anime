@@ -42,7 +42,7 @@ header .navbar .navbar-item {
 header .navbar .button-login {
   padding: 7px 15px;
   margin: 5px 10px;
-  background-color: #eb315a;
+  background-color: var(--colorItem);
   border-radius: 5px;
 }
 header .navbar .search {
@@ -75,7 +75,7 @@ header .navbar .navbar-item::after {
   content: "";
   width: 0%;
   height: 1px;
-  background-color: #eb315a;
+  background-color: var(--colorItem);
   position: absolute;
   bottom: 0;
   left: 0;
@@ -83,7 +83,7 @@ header .navbar .navbar-item::after {
   transition: width none;
 }
 header .navbar .navbar-item a:hover {
-  color: #eb315a;
+  color: var(--colorItem);
   font-weight: 600;
 }
 header .navbar .navbar-item:hover:after {

@@ -79,7 +79,7 @@
 #video_player .controls .progress-area .progress-bar {
   position: relative;
   width: 0%;
-  background-color: rgba(224, 5, 5, 0.986);
+  background-color: var(--colorItem);
   height: inherit;
   border-radius: inherit;
   cursor: pointer;
@@ -93,7 +93,7 @@
   right: -5px;
   top: 50%;
   transform: translatey(-50%);
-  background-color: rgba(224, 5, 5, 0.986);
+  background-color: var(--colorItem);
 }
 .controls .controls-list {
   display: flex;
@@ -291,7 +291,7 @@
   width: 100px;
   height: 2px;
   margin: 10px 0;
-  background-color: rgb(255, 142, 142);
+  background-color: var(--colorItem);
 }
 video[poster] {
   object-fit: cover;
@@ -431,7 +431,7 @@ div.teamsub {
   width: 50px;
   bottom: -5px;
   height: 2px;
-  background-color: rgb(255, 142, 142);
+  background-color: var(--colorItem);
 }
 
 @media (max-width: 400px) {

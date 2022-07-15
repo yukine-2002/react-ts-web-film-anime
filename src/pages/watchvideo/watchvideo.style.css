@@ -299,7 +299,7 @@ video[poster] {
 .episode .episode-list .episode-item {
   display: flex;
   justify-content: center;
-  align-items: start;
+  align-items: flex-start;
   flex-direction: column;
   max-width: 300px;
   max-height: 300px;

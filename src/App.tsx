@@ -4,6 +4,7 @@ import "./grid.css";
 import Header from "./component/header/header";
 import lazyLoading from "./component/lazyLoading/lazyLoading";
 import CollectionPage from "./pages/collectionpage/collectionpage";
+import LoginPage from "./pages/loginpage/loginpage";
 const HomePages = lazyLoading(() => import("./pages/homepage/homepage"));
 const WatchVideos = lazyLoading(() => import("./pages/watchvideo/watchvideo"));
 
@@ -11,7 +12,6 @@ function App() {
   return (
     <div id="main">
       <Header />
-
       <Routes>
         <Route path="/" element={<HomePages />} />
 
@@ -22,6 +22,8 @@ function App() {
         <Route path="/:category">
           <Route path=":slug" element={<CollectionPage />} />
         </Route>
+
+        <Route path="login" element={<LoginPage />} />
       </Routes>
 
       <footer className="section">

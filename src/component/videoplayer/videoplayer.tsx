@@ -33,7 +33,6 @@ const VideoPlayer = ({ source,info }: propVideo) => {
   const volume_range = useRef<HTMLInputElement | null>(null);
   const refContainer = useRef<HTMLDivElement | null>(null);
 
-
   useEffect(() => {
     if (source) {
       pauseVideo();
@@ -170,7 +169,6 @@ const VideoPlayer = ({ source,info }: propVideo) => {
           onPause={pauseVideo}
           onLoadStart={storeVideo}
           onTimeUpdate={(e) => timeUpdate(e)}
-          
           onLoadedData={(e) => {
             setDuration(e.currentTarget.duration)
           } }

@@ -217,7 +217,7 @@
   border-radius: 20px;
   font-weight: 600;
   color: aliceblue;
-  background-color: var(--colorItem)red;
+  background-color: var(--colorItem);
   cursor: pointer;
 }
 .slide_content_btn_play {

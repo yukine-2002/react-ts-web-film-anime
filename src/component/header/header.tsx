@@ -9,7 +9,6 @@ import { Spinner } from "../lazyLoading/lazyLoading";
 
 const Header = () => {
   const refDiv = useRef<HTMLDivElement | null>(null);
-  const reDivDrop = useRef<HTMLDivElement | null>(null);
   const [isMobileDropdown, setIsMobileDropdown] = useState(false);
   const [isMobileBar, setIsMobileBar] = useState(false);
 
@@ -110,7 +109,7 @@ const Header = () => {
             {search ? isSuccess ? <DropdownSearch dataSearch = {data.data} /> :  <div className="dropdown_search_loading"> <Spinner /> </div> : ""}
           </div>
           <div className="button-login">
-            <Link to={``}>
+            <Link to={`/login`} >
               <span>Login</span>
             </Link>
           </div>

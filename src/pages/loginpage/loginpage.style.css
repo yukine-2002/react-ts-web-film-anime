@@ -1,0 +1,97 @@
+.login_page {
+   
+    align-items: center;
+    display: flex;
+    height: 100vh;
+    width: 100%;
+    justify-content: center;
+    overflow: hidden;
+    position: absolute;
+    -webkit-user-select: none;
+    user-select: none;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10001;
+    background-image: linear-gradient(rgba(0,0,0,.2),rgba(0,0,0,.2)),url(https://www.todofondos.net/wp-content/uploads/4522x2826-Violet-Evergarden-personaje-HD-Wallpaper.png);
+    background-size: cover;
+}
+.login_container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  text-align: center;
+  z-index: 2;
+}
+.model_login_page {
+  --width: 640px;
+  background: rgba(255, 255, 255, 0.77);
+  border-radius: 8px;
+  max-width: calc(100vw - 32px);
+  min-height: 500px;
+  padding: 48px 16px;
+  position: relative;
+  width: var(--width);
+}
+.login_container .header_model_login_page img{
+    --height: 70px;
+    --width: 120px;
+    border-radius: 8px;
+    width: var(--width);
+    height: var(--height);
+    object-fit: cover;  
+}
+.login_container .header_model_login_page h2{
+    color: #292929;
+    font-size: 2.8rem;
+    font-weight: 700;
+    line-height: 1.4;
+}
+.body_model_login_page{
+    margin-top: 24px;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    margin-top: 8px;
+}
+.item_login_page{
+    margin-top: 14px;
+    --height: 44px;
+    background-color: rgba(255, 255, 255, 0);
+    border: 2px solid #dce0e3;
+    border-radius: 44px;
+    display: inline-block;
+    height: var(--height);
+    line-height: var(--height);
+    padding-left: 16px;
+    position: relative;
+    text-align: center;
+    width: 320px;
+}
+.item_login_page img{
+    left: 16px;
+    position: absolute;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+.item_login_page span{
+    color: #35414c;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 600;
+    line-height: 40px;
+    outline: 0;
+    text-align: center;
+}
+.Login_dontHaveAcc{
+    font-size: 0.9rem;
+    line-height: 1.8;
+    margin-bottom: 0;
+    padding: 24px 16px 0;
+}
+.Login_dontHaveAcc a {
+    color: var(--colorItem);
+    font-weight: 600;
+}

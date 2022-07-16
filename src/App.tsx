@@ -1,18 +1,36 @@
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import "./App.css";
 import "./grid.css";
 import Header from "./component/header/header";
 import lazyLoading from "./component/lazyLoading/lazyLoading";
 import CollectionPage from "./pages/collectionpage/collectionpage";
-import LoginPage from "./pages/loginpage/loginpage";
+import { useEffect } from "react";
+import { auth, createUserProfileDocument } from "./firebase/firebase";
+import { useAppDispatch, useAppSelector } from "./redux/useTypeSelector";
+import { setCurrentUser, user } from "./redux/auth/auth.action";
+
+
 const HomePages = lazyLoading(() => import("./pages/homepage/homepage"));
 const WatchVideos = lazyLoading(() => import("./pages/watchvideo/watchvideo"));
+const LoginPage = lazyLoading(() => import("./pages/loginpage/loginpage"));
 
 function App() {
+  const dispatch = useAppDispatch()
+  const selectUser = useAppSelector(state => state.auth!.currentUser)
+  useEffect(() => {
+    auth.onAuthStateChanged( async user => {
+      if(user){
+        const snapshot =  await createUserProfileDocument(user)
+        dispatch(setCurrentUser(snapshot.data() as user) as any)
+      }
+    })
+  },[auth])
+
   return (
     <div id="main">
       <Header />
       <Routes>
+
         <Route path="/" element={<HomePages />} />
 
         <Route path="/watch">
@@ -23,7 +41,8 @@ function App() {
           <Route path=":slug" element={<CollectionPage />} />
         </Route>
 
-        <Route path="login" element={<LoginPage />} />
+        <Route  path="login" element={selectUser ? <Navigate to='/' /> : <LoginPage />} />
+
       </Routes>
 
       <footer className="section">

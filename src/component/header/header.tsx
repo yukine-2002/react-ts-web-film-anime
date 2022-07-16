@@ -6,19 +6,23 @@ import { useEffect, useRef, useState } from "react";
 import { useSearch } from "../../utils/useFetchSerice";
 import DropdownSearch from "../dropdown-search/dropdown-search";
 import { Spinner } from "../lazyLoading/lazyLoading";
+import { auth, signInWithGoogle } from "../../firebase/firebase";
+import { useAppDispatch, useAppSelector } from "../../redux/useTypeSelector";
+import { signOutCurrentUser } from "../../redux/auth/auth.action";
 
 const Header = () => {
   const refDiv = useRef<HTMLDivElement | null>(null);
   const [isMobileDropdown, setIsMobileDropdown] = useState(false);
   const [isMobileBar, setIsMobileBar] = useState(false);
-
+  const selectUser = useAppSelector((state) => state.auth!.currentUser);
+  const dispatch = useAppDispatch();
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [windowHeight, setWindowHeight] = useState(window.innerHeight);
   const [search, setSearch] = useState<string>("");
 
   const { data, isLoading, isSuccess, refetch } = useSearch({
     keyword: search,
-    limit: windowHeight/100,
+    limit: windowHeight / 100,
     enabled: true,
   });
   useEffect(() => {
@@ -45,7 +49,7 @@ const Header = () => {
       refDiv.current!.style.background = "transparent";
     }
   };
- 
+
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.currentTarget.value);
   };
@@ -55,6 +59,7 @@ const Header = () => {
       window.removeEventListener("scroll", listenScrollEvent);
     };
   }, []);
+
   return (
     <header>
       <div className="navbar" ref={refDiv}>
@@ -106,12 +111,31 @@ const Header = () => {
               onChange={handleSearch}
               placeholder="search your anime"
             />
-            {search ? isSuccess ? <DropdownSearch dataSearch = {data.data} /> :  <div className="dropdown_search_loading"> <Spinner /> </div> : ""}
+            {search ? (
+              isSuccess ? (
+                <DropdownSearch dataSearch={data.data} />
+              ) : (
+                <div className="dropdown_search_loading">
+                  {" "}
+                  <Spinner />{" "}
+                </div>
+              )
+            ) : (
+              ""
+            )}
           </div>
           <div className="button-login">
-            <Link to={`/login`} >
-              <span>Login</span>
-            </Link>
+            {selectUser ? (
+              <Link to={``}>
+                <span onClick={() => dispatch(signOutCurrentUser() as any)}>
+                  Logout
+                </span>
+              </Link>
+            ) : (
+              <Link to={`/login`}>
+                <span>Login</span>
+              </Link>
+            )}
           </div>
         </div>
       </div>

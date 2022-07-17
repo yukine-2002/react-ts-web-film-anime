@@ -19,7 +19,7 @@ interface setUser {
 
 export type actions = setUser | useType
 
-export const setCurrentUser = (user : user) => {
+export const setCurrentUser = (user : any) => {
     return (dispatch : Dispatch<actions>) => {
         dispatch({
             type : UserActionTypes.SET_CURRENT_USER,

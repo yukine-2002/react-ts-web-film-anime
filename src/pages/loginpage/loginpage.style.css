@@ -1,20 +1,20 @@
 .login_page {
-   
-    align-items: center;
-    display: flex;
-    height: 100vh;
-    width: 100%;
-    justify-content: center;
-    overflow: hidden;
-    position: absolute;
-    -webkit-user-select: none;
-    user-select: none;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 10001;
-    background-image: linear-gradient(rgba(0,0,0,.2),rgba(0,0,0,.2)),url(https://www.todofondos.net/wp-content/uploads/4522x2826-Violet-Evergarden-personaje-HD-Wallpaper.png);
-    background-size: cover;
+  align-items: center;
+  display: flex;
+  height: 100vh;
+  width: 100%;
+  justify-content: center;
+  overflow: hidden;
+  position: absolute;
+  -webkit-user-select: none;
+  user-select: none;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10001;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
+    url(https://www.todofondos.net/wp-content/uploads/4522x2826-Violet-Evergarden-personaje-HD-Wallpaper.png);
+  background-size: cover;
 }
 .login_container {
   align-items: center;
@@ -34,64 +34,138 @@
   position: relative;
   width: var(--width);
 }
-.login_container .header_model_login_page img{
-    --height: 70px;
-    --width: 120px;
-    border-radius: 8px;
-    width: var(--width);
-    height: var(--height);
-    object-fit: cover;  
+.login_container .header_model_login_page img {
+  --height: 70px;
+  --width: 120px;
+  border-radius: 8px;
+  width: var(--width);
+  height: var(--height);
+  object-fit: cover;
 }
-.login_container .header_model_login_page h2{
-    color: #292929;
-    font-size: 2.8rem;
-    font-weight: 700;
-    line-height: 1.4;
+.login_container .header_model_login_page h2 {
+  color: #292929;
+  font-size: 2.8rem;
+  font-weight: 700;
+  line-height: 1.4;
 }
-.body_model_login_page{
-    margin-top: 24px;
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-    margin-top: 8px;
+.body_model_login_page {
+  margin-top: 24px;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+ 
 }
-.item_login_page{
-    margin-top: 14px;
-    --height: 44px;
-    background-color: rgba(255, 255, 255, 0);
-    border: 2px solid #dce0e3;
-    border-radius: 44px;
-    display: inline-block;
-    height: var(--height);
-    line-height: var(--height);
-    padding-left: 16px;
-    position: relative;
-    text-align: center;
-    width: 320px;
+.item_login_page {
+  margin-top: 14px;
+  --height: 44px;
+  background-color: rgba(255, 255, 255, 0);
+  border: 2px solid #dce0e3;
+  border-radius: 44px;
+  display: inline-block;
+  height: var(--height);
+  line-height: var(--height);
+  padding-left: 16px;
+  position: relative;
+  text-align: center;
+  width: 320px;
 }
-.item_login_page img{
-    left: 16px;
-    position: absolute;
-    top: 50%;
-    -webkit-transform: translateY(-50%);
-    transform: translateY(-50%);
+.item_login_page img {
+  left: 16px;
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
 }
-.item_login_page span{
-    color: #35414c;
-    cursor: pointer;
-    font-size: 0.9rem;
-    font-weight: 600;
-    line-height: 40px;
-    outline: 0;
-    text-align: center;
+.item_login_page span {
+  color: #35414c;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+  line-height: 40px;
+  outline: 0;
+  text-align: center;
 }
-.Login_dontHaveAcc{
-    font-size: 0.9rem;
-    line-height: 1.8;
-    margin-bottom: 0;
-    padding: 24px 16px 0;
+.Login_dontHaveAcc {
+  font-size: 0.9rem;
+  line-height: 1.8;
+  margin-bottom: 0;
+  padding: 24px 16px 0;
 }
 .Login_dontHaveAcc a {
-    color: var(--colorItem);
-    font-weight: 600;
+  color: var(--colorItem);
+  font-weight: 600;
+}
+.FormControl {
+  margin-top: 10px;
+  overflow: hidden;
+  width: 100%;
+}
+.FormInput {
+  color: #292929;
+  text-align: left;
+  width: 100%;
+  background: rgba(22, 24, 35, 0.06);
+  border: 1px solid rgba(22, 24, 35, 0.06);
+  border-radius: 44px;
+  display: flex;
+  align-items: center;
+  height: 44px;
+  overflow: hidden;
+}
+.FormInput span {
+  padding: 0 10px;
+  border-right: 1px solid #000;
+  margin: 10px;
+  color: #888d92;
+}
+.FormInput input {
+  background-color: transparent;
+  border: none;
+  display: block;
+  flex: 1 1;
+  outline: none;
+  padding: 12px 20px;
+  font-family: inherit;
+  font-size: 100%;
+  line-height: 1.15;
+  margin: 0;
+  color: #888d92;
+}
+.FormInput input::placeholder {
+  color: #888d92;
+  font-size: 15px;
+  font-weight: 600;
+}
+.btn-submit {
+  padding: 8px 16px;
+  height: 44px;
+  margin-top: 20px;
+  width: 100%;
+  background-position: 0 0;
+  background-size: 100% 200%;
+  border: 0;
+  color: #fff;
+  font-weight: 600;
+  transition: background-position 0.15s cubic-bezier(0.2, 0.2, 0.2, 1);
+  background: linear-gradient(to right, rgb(86 207 225 / 80%), rgb(68 151 151));
+  cursor: pointer;
+}
+.btn-submit .Submit {
+  align-items: center;
+  display: flex;
+  height: 100%;
+  justify-content: center;
+}
+.login_container .back {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  cursor: pointer;
+  padding: 10px 25px;
+}
+.login_container .back span {
+  font-size: 1.6rem;
+  font-weight: 900;
+  margin-top: 10px;
 }

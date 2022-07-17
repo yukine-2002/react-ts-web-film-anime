@@ -262,6 +262,12 @@ footer .container{
   }
 }
 @media screen and (max-width: 940px) {
+  .collection_dropdown_box .title h3{
+    font-size: 1rem;
+  }
+  .collection_dropdown_box .row ul li a {
+    padding: 0 10px;
+  }
   .slide_content_left { 
     padding: 0 25px 0 25px !important;
 }
@@ -334,7 +340,7 @@ footer .container{
     top: 10px !important;
   }
   .collection_dropdown_box .row ul {
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)) !important;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)) !important;
   }
   .navbar-right .navbar-item:last-child {
     margin-bottom: 150px;

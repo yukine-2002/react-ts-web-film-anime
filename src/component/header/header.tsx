@@ -6,14 +6,14 @@ import { useEffect, useRef, useState } from "react";
 import { useSearch } from "../../utils/useFetchSerice";
 import DropdownSearch from "../dropdown-search/dropdown-search";
 import { Spinner } from "../lazyLoading/lazyLoading";
-import { auth, signInWithGoogle } from "../../firebase/firebase";
 import { useAppDispatch, useAppSelector } from "../../redux/useTypeSelector";
-import { signOutCurrentUser } from "../../redux/auth/auth.action";
+import AuthDropDown from "../auth-dropdown/auth-dropdown";
 
 const Header = () => {
   const refDiv = useRef<HTMLDivElement | null>(null);
   const [isMobileDropdown, setIsMobileDropdown] = useState(false);
   const [isMobileBar, setIsMobileBar] = useState(false);
+  const [isDropdownAuth,setDropdownAuth] = useState(false)
   const selectUser = useAppSelector((state) => state.auth!.currentUser);
   const dispatch = useAppDispatch();
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -124,19 +124,23 @@ const Header = () => {
               ""
             )}
           </div>
-          <div className="button-login">
-            {selectUser ? (
-              <Link to={``}>
-                <span onClick={() => dispatch(signOutCurrentUser() as any)}>
-                  Logout
-                </span>
-              </Link>
-            ) : (
+          {selectUser ? (
+            <div className="auth_login">
+              <div className="img" onClick={() => setDropdownAuth(!isDropdownAuth)}>
+                <img src={selectUser.img} alt="" />
+              </div>
+              {
+                isDropdownAuth ?   <AuthDropDown /> : ''
+              }
+            
+            </div>
+          ) : (
+            <div className="button-login">
               <Link to={`/login`}>
                 <span>Login</span>
               </Link>
-            )}
-          </div>
+            </div>
+          )}
         </div>
       </div>
     </header>

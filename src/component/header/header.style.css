@@ -92,3 +92,14 @@ header .navbar .navbar-item:hover:after {
 .mobile {
   display: none;
 }
+.auth_login{
+  position: relative;
+}
+.auth_login img{
+  border-radius: 50%;
+  cursor: pointer;
+  height: 38px;
+  margin-left: 12px;
+  object-fit: cover;
+  width: 38px;
+}

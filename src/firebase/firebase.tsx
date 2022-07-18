@@ -1,20 +1,19 @@
 import { initializeApp } from "firebase/app";
 import {
-  createUserWithEmailAndPassword,
   getAuth,
   GoogleAuthProvider,
-  signInWithEmailAndPassword,
   signInWithPopup,
 } from "firebase/auth";
+import { getStorage } from "firebase/storage";
 import {
-  collection,
   doc,
   getDoc,
-  getDocs,
   getFirestore,
   setDoc,
 } from "firebase/firestore";
 import { FacebookAuthProvider } from "firebase/auth";
+import { currentDate } from "../utils/utils";
+
 
 const firebaseConfig = {
   apiKey: "AIzaSyCn2BehSi_Vo3IFyjP39EVgxfDoBp5S4ss",
@@ -29,6 +28,7 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 export const firestore = getFirestore(app);
+export const storage = getStorage(app);
 
 export const createUserProfileDocument = async (
   auth: any,
@@ -37,24 +37,17 @@ export const createUserProfileDocument = async (
   const useRef = doc(firestore, `users`, auth.uid);
   const docSnap = await getDoc(useRef);
   if (!docSnap.exists()) {
-    var today = new Date();
-
-    var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-
-    var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-
-    var dateTime = date+' '+time;
+   
     await setDoc(
       useRef,
       {
         name: auth.displayName,
         email: auth.email,
         img: auth.photoURL,
-        createAt: dateTime,
+        createAt: currentDate(),
       },
       { merge: true }
     );
-
     return await getDoc(useRef);
   }
   return docSnap;

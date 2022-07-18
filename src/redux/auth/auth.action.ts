@@ -3,6 +3,7 @@ import { auth } from "../../firebase/firebase";
 import { UserActionTypes } from "./auth.types";
 
 export interface user {
+    uid : string,
     name : string,
     email : string,
     img : string,

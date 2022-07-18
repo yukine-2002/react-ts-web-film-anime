@@ -71,8 +71,7 @@ const LoginPage = () => {
                       required
                     />
                   </div>
-                </div>
-
+                </div>               
                 <div className="FormControl">
                   <div className="FormInput">
                     <span className="material-icons">lock</span>
@@ -92,7 +91,6 @@ const LoginPage = () => {
               </form>
             </div>
           )}
-
           <p className="Login_dontHaveAcc">
             Bạn chưa có tài khoản? <Link to={""}>Đăng ký</Link>
           </p>

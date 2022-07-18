@@ -141,3 +141,11 @@ export const RANKINGS = [
     name: "BXH năm",
   },
 ];
+
+export interface posts{
+  pid : string,
+  content : string ,
+  url : string,
+  like : string,
+  date : string
+}

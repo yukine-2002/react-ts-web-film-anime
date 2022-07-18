@@ -8,13 +8,12 @@ import { useEffect } from "react";
 import { auth, createUserProfileDocument } from "./firebase/firebase";
 import { useAppDispatch, useAppSelector } from "./redux/useTypeSelector";
 import { setCurrentUser, user } from "./redux/auth/auth.action";
-import UserPage from "./pages/userpage/userpage";
 
 
 const HomePages = lazyLoading(() => import("./pages/homepage/homepage"));
 const WatchVideos = lazyLoading(() => import("./pages/watchvideo/watchvideo"));
 const LoginPage = lazyLoading(() => import("./pages/loginpage/loginpage"));
-const userPage = lazyLoading(() => import('./pages/userpage/userpage'))
+const UserPages = lazyLoading(() => import('./pages/userpage/userpage'))
 
 function App() {
   const dispatch = useAppDispatch()
@@ -23,7 +22,7 @@ function App() {
     auth.onAuthStateChanged( async user => {
       if(user){
         const snapshot =  await createUserProfileDocument(user)
-        dispatch(setCurrentUser(snapshot.data()) as any)
+        dispatch(setCurrentUser({uid : snapshot.id,...snapshot.data()}) as any)
       }
     })
   },[auth])
@@ -42,7 +41,10 @@ function App() {
         <Route path="/:category">
           <Route path=":slug" element={<CollectionPage />} />
         </Route>
-        <Route path="/profile" element={<UserPage />} />
+        <Route path="/profile">
+             <Route path=":uid" element={<UserPages />} />
+        </Route>
+       
         <Route  path="login" element={selectUser ? <Navigate to='/' /> : <LoginPage />} />
 
       </Routes>

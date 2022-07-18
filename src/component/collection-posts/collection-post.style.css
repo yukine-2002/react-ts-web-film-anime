@@ -1,0 +1,66 @@
+.collectionPost{
+    width: 100%;
+    background-color: rgb(63, 61, 61);
+    border-radius: 8px;
+    box-shadow: 0 0 5px 0 rgba(236, 234, 234, 0.521), 0 0 1px 0 rgb(0 0 0 / 10%);
+    margin: 15px 0;
+    padding: 10px;
+}
+.collectionPost .user-name{
+    text-align: left;
+}
+.post-body-text p {
+    font-size: 1rem;
+    color: #fff;
+}
+.post-body {
+    padding-bottom: 15px;
+}
+.post-img-video {
+    margin-top: 15px;
+    width: 100%;
+    height: 400px;
+    position: relative;
+}
+.post-img-video .img-container img , .post-img-video .video-container video{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+.post-img-video  .img-container , .post-img-video  .video-container {
+    width: 100%;
+    height: 100%;
+    background: #4c4c4c;
+}
+.react-post {
+    padding: 10px 15px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-top: 1px solid #636060;
+    border-bottom: 1px solid #636060;
+    position: relative;
+}
+.react-post .item-react{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+}
+.react-post::before{
+    content: '';
+    position: absolute;
+    width: 1px;
+    height: 100%;
+    background: #636060;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    z-index: 2;
+}
+.react-post .item-react span{
+    font-weight: 700;
+    color: #fff;
+    margin: 0 3px;
+    cursor: pointer;
+}

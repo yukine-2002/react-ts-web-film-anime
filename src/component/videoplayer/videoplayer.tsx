@@ -289,9 +289,4 @@ const VideoPlayer = ({ source,info }: propVideo) => {
   );
 };
 
-export default React.memo(
-  VideoPlayer,
-  (prevProps: propVideo, nextProps: propVideo) => {
-    return prevProps.source?.videoSource === nextProps.source?.videoSource;
-  }
-);
+export default VideoPlayer

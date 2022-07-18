@@ -13,7 +13,7 @@ const AuthDropDown = () => {
       <div className="auth_dropdown_container">
         <div className="auth_dropdown_header">
             <div className="auth_img">
-                <img src={selectUser?.img} alt="" />
+                <img src={selectUser?.img ? selectUser.img : `https://static.fullstack.edu.vn/static/media/fallback-avatar.155cdb2376c5d99ea151.jpg`} alt="" />
             </div>
             <div className="auth_info">
                 <h3>{!selectUser?.name ? "auth" :selectUser?.name }</h3>
@@ -22,7 +22,7 @@ const AuthDropDown = () => {
         </div>
         <div className="auth_dropdown_body">
           <div className="auth_dropdown_item">
-            <Link  to={'/profile'}>
+            <Link  to={`profile/${selectUser?.uid}`}>
                 <span>Trang cá nhân</span>
             </Link>
           </div>

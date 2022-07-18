@@ -115,9 +115,8 @@ const Header = () => {
               isSuccess ? (
                 <DropdownSearch dataSearch={data.data} />
               ) : (
-                <div className="dropdown_search_loading">
-                  {" "}
-                  <Spinner />{" "}
+                <div className="dropdown_search_loading">          
+                  <Spinner />
                 </div>
               )
             ) : (
@@ -127,7 +126,7 @@ const Header = () => {
           {selectUser ? (
             <div className="auth_login">
               <div className="img" onClick={() => setDropdownAuth(!isDropdownAuth)}>
-                <img src={selectUser.img} alt="" />
+                <img src={selectUser?.img ? selectUser.img : `https://static.fullstack.edu.vn/static/media/fallback-avatar.155cdb2376c5d99ea151.jpg`} alt="" />
               </div>
               {
                 isDropdownAuth ?   <AuthDropDown /> : ''

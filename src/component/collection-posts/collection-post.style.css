@@ -64,3 +64,21 @@
     margin: 0 3px;
     cursor: pointer;
 }
+.collectionPost .form-input input {
+    border-radius: unset;
+}
+.button-sm {
+    padding: 12px 15px;
+    margin: 0 10px;
+    white-space: nowrap;
+    background-color: var(--colorItem);
+}
+.button-sm button{
+    border: none;
+    outline: none;
+    font-size: 0.9rem;
+    color: #fff;
+    font-weight: 600;
+    background-color: transparent;
+    cursor: pointer;
+}

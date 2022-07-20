@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import { auth } from "../../firebase/firebase";
 import { signOutCurrentUser } from "../../redux/auth/auth.action";
 import { useAppDispatch, useAppSelector } from "../../redux/useTypeSelector";
 import "./auth-dropdown.style.css";

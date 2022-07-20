@@ -5,6 +5,7 @@ import "slick-carousel/slick/slick-theme.css";
 import { useNavigate } from "react-router-dom";
 import {
   useFetchMove,
+  useFetchRankDay,
   useFetchRecently,
   useFetchRecommender,
   useFetchSlide,
@@ -12,15 +13,15 @@ import {
 import { Spinner } from "../../component/lazyLoading/lazyLoading";
 import Item from "../../component/itemslide/item";
 import ItemSliderHeader from "../../component/itemslide/item-slide-header";
-import { useEffect, useState } from "react";
-import { Anime, AnimeInfo } from "../../utils/type";
-import {
-  getInfo,
-  getSlide,
-  handlePath,
-  rankDate,
-} from "../../utils/service";
+import { useEffect} from "react";
+import { Anime} from "../../utils/type";
+import { handlePath } from "../../utils/service";
 import ItemRecommended from "../../component/itemslide/item-recommended";
+import { useAppDispatch, useAppSelector } from "../../redux/useTypeSelector";
+import {
+  fetchAnimeInfoSlide,
+  fetchAnimeRank,
+} from "../../redux/collection/collection.actions";
 
 const settings = {
   infinite: false,
@@ -132,72 +133,30 @@ const HomePage = () => {
   const { data: RecommendedData, isSuccess: isRecommended } =
     useFetchRecommender();
   const { data: MoveData, isSuccess: isMovie } = useFetchMove();
-  const { data: SlideData, isSuccess: isSlideLoading } = useFetchSlide();
-  const [dataSlide, setDataSlide] = useState<AnimeInfo[]>([]);
-  const [dataRecommended, setDataRecommended] = useState<AnimeInfo[]>([]);
+  const { data: SlideData , isSuccess : isSuccessDataSl} = useFetchSlide();
+  const { data: RankDayData , isSuccess : isSuccessDataRD } = useFetchRankDay();
   const listLocalStorage: Anime[] = JSON.parse(localStorage.getItem("recent")!);
+  const dispatch = useAppDispatch();
+  const selectAnimeSlideInfo = useAppSelector(
+    (state) => state.collection.animeInfoSlide
+  );
+  const selectAnimeRank = useAppSelector((state) => state.collection.animeRank);
 
   useEffect(() => {
-    getSlide()
-      .then((response) => {
-        return response;
-      })
-      .then((data) => {
-        let fromapi = data;
-        fromapi.map((item: Anime) =>
-          getInfo(item.slug)
-            .then((response) => {
-              return response;
-            })
-            .then((data) => {
-              let data_api: AnimeInfo = data;
-              setDataSlide((oldItem) => {
-                const isEx = oldItem.find((item) => item.id === data_api.id);
-                if (isEx) {
-                  return oldItem;
-                }
-                return [...oldItem, data_api];
-              });
-            })
-        );
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
+    dispatch(fetchAnimeInfoSlide(SlideData!) as any);
+  }, [isSuccessDataSl]);
 
   useEffect(() => {
-    rankDate()
-      .then((response) => {
-        return response;
-      })
-      .then((data) => {
-        let fromapi = data;
-        fromapi.map((item: Anime) => {
-          getInfo(item.slug)
-            .then((response) => {
-              return response;
-            })
-            .then((data) => {
-              let data_api: AnimeInfo = data;
-              setDataRecommended((oldItem) => {
-                const isEx = oldItem.find((item) => item.id === data_api.id);
-                if (isEx) {
-                  return oldItem;
-                }
-                return [...oldItem, data_api];
-              });
-            });
-        });
-      });
-  }, []);
+    dispatch(fetchAnimeRank(RankDayData!) as any);
+  }, [isSuccessDataRD]);
+
   return (
     <div>
       <div className="body">
         <div className="slide p-l-r m-top-100 m-bottom-50">
           <SlickCarousel setting={settingSlide} className="Slider-slick-sl">
-            {isSlideLoading ? (
-              dataSlide.map((item) => (
+            {isSuccessDataSl ? (
+              selectAnimeSlideInfo.map((item) => (
                 <ItemSliderHeader key={item.slug} item={item} />
               ))
             ) : (
@@ -279,9 +238,12 @@ const HomePage = () => {
             setting={settingsRcm}
             className="slick-slider-recommender"
           >
-            {dataRecommended.map((item) => (
+            { isSuccessDataRD ?
+            selectAnimeRank.map((item) => (
               <ItemRecommended key={item.slug} item={item} />
-            ))}
+            )) : (
+              <Spinner />
+            ) }
           </SlickCarousel>
         </div>
 

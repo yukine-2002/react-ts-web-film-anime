@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Episode from "../../component/episode/episode";
 import { Spinner } from "../../component/lazyLoading/lazyLoading";

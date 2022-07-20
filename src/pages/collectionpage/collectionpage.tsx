@@ -1,9 +1,8 @@
 import useInfiniteScroll from "react-infinite-scroll-hook";
-import { useInfiniteQuery } from "react-query";
 import { useLocation, useNavigate } from "react-router-dom";
 import Item from "../../component/itemslide/item";
 import { Spinner } from "../../component/lazyLoading/lazyLoading";
-import { getList, handlePath } from "../../utils/service";
+import { handlePath } from "../../utils/service";
 import { useFetchList } from "../../utils/useFetchSerice";
 
 

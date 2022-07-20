@@ -7,6 +7,7 @@ import {
   getRecommender,
   getSlide,
   getSource,
+  rankDate,
   Search,
 } from "./service";
 import { Source } from "./type";
@@ -39,6 +40,9 @@ export const useFetchMove = () => {
 };
 export const useFetchSlide = () => {
   return useQuery(["slide"], () => getSlide());
+};
+export const useFetchRankDay = () => {
+  return useQuery(["rankDay"], () => rankDate());
 };
 export const useFetchList = ({ category, slug }: Props) => {
   const useFetch = ({ pageParam = 1 }) =>

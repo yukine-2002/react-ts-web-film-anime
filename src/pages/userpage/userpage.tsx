@@ -1,7 +1,7 @@
 import "./userpage.style.css";
 import bg_profile from "../../assests/bg-profile.jpg";
-import { useAppSelector } from "../../redux/useTypeSelector";
-import React, { useEffect, useRef, useState } from "react";
+import { useAppDispatch, useAppSelector } from "../../redux/useTypeSelector";
+import { useEffect, useRef, useState } from "react";
 import { auth, firestore, storage } from "../../firebase/firebase";
 import {
   deleteObject,
@@ -9,25 +9,27 @@ import {
   ref,
   uploadBytesResumable,
 } from "firebase/storage";
-import { addDoc, collection, doc, getDoc, getDocs } from "firebase/firestore";
-import { currentDate } from "../../utils/utils";
+import {  doc, getDoc } from "firebase/firestore";
 import CollectionPost from "../../component/collection-posts/collection-post";
 import { posts } from "../../utils/type";
 import { Spinner } from "../../component/lazyLoading/lazyLoading";
 import { useParams } from "react-router-dom";
 import { user } from "../../redux/auth/auth.action";
 import ModelPost from "../../component/model-post/model-post";
+import { setCPost, upPost } from "../../redux/posts/posts.action";
 
 const UserPage = () => {
   const [selectUser, setSelectUser] = useState<user>();
   const [model, setModel] = useState(false);
   const [isChooseFile, setIsChooseFile] = useState(false);
-  const [post, setPost] = useState<posts[]>([]);
   const [url, setURL] = useState("");
   const [content, setContent] = useState("");
   const refUploadFile = useRef<HTMLInputElement>(null);
   const [percent,setPercent] = useState(0)
   const { uid } = useParams();
+  const dispatch = useAppDispatch()
+  const selectPost = useAppSelector(state => state.posts.posts)
+  const [post, setPost] = useState<posts[]>(selectPost!);
   const handleClickUpload = () => {
     if (refUploadFile.current) {
       refUploadFile.current.click();
@@ -77,7 +79,7 @@ const UserPage = () => {
       );
     }
   };
-  console.log(1)
+ 
   const handleRemoveImage = () => {
     const desertRef = ref(storage, url);
     deleteObject(desertRef)
@@ -91,58 +93,9 @@ const UserPage = () => {
       });
   };
   const handleSubmitPost = async () => {
-    const postRef = collection(
-      firestore,
-      "users",
-      auth.currentUser?.uid!,
-      "posts"
-    );
-    const docData = {
-      content: content,
-      url: url,
-      like: "",
-      date: currentDate(),
-    };
-   
-    try {
-      await addDoc(postRef, docData);
-      getPost()
-      setModel(false);
-      setIsChooseFile(false);
-      setURL("");
-      setContent("");
-    } catch (error) {
-      console.log(error);
-    }
+    dispatch(upPost({content,url,setModel,setIsChooseFile,setURL,setContent}) as any)
   };
 
-
-  const getPost = async () => {
-    if (uid) {
-      const postRef = collection(firestore, "users", uid, "posts");   
-      const querySnapshot = await getDocs(postRef);
-      if (postRef.parent?.id === uid) {
-        querySnapshot.forEach((doc) => {
-          setPost((oldItem) => {
-            const isEx = oldItem.find((item) => item.pid === doc.id);
-            if (isEx) {
-              return oldItem;
-            }
-            return [
-              ...post,
-              {
-                pid: doc.id,
-                content: doc.data().content,
-                url: doc.data().url,
-                date: doc.data().date,
-                like: doc.data().like,
-              },
-            ];
-          });
-        });
-      }
-    }
-  };
   const getUser = async () => {
     if (uid) {
       const postRef = doc(firestore, "users", uid);
@@ -157,7 +110,7 @@ const UserPage = () => {
     }
   };
   useEffect(() => {
-    getPost();
+    dispatch(setCPost(uid!) as any)
     getUser();
   }, [post,uid]);
 
@@ -259,11 +212,11 @@ const UserPage = () => {
                 ) : (
                   ""
                 )}
-                {post ? (
-                  post
+                {selectPost ? (
+                  selectPost
                     .sort((a, b) => Date.parse(b.date) - Date.parse(a.date))
                     .map((item,index) => (
-                      <CollectionPost key={index} item={item} useT={selectUser!} />
+                      <CollectionPost key={index} item={item} useId={uid!} useT={selectUser!} />
                     ))
                 ) : (
                   <Spinner />

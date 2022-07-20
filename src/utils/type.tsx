@@ -141,11 +141,17 @@ export const RANKINGS = [
     name: "BXH năm",
   },
 ];
-
+export interface comment  {
+  mid: string,
+  uid: string,
+  content: string,
+  date: string,
+};
 export interface posts{
   pid : string,
   content : string ,
+  comment : comment[],
   url : string,
-  like : string,
+  like : [],
   date : string
 }

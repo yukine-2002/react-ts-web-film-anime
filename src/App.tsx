@@ -7,7 +7,7 @@ import CollectionPage from "./pages/collectionpage/collectionpage";
 import { useEffect } from "react";
 import { auth, createUserProfileDocument } from "./firebase/firebase";
 import { useAppDispatch, useAppSelector } from "./redux/useTypeSelector";
-import { setCurrentUser, user } from "./redux/auth/auth.action";
+import { setCurrentUser } from "./redux/auth/auth.action";
 
 
 const HomePages = lazyLoading(() => import("./pages/homepage/homepage"));
@@ -25,7 +25,7 @@ function App() {
         dispatch(setCurrentUser({uid : snapshot.id,...snapshot.data()}) as any)
       }
     })
-  },[auth])
+  },[auth.currentUser])
 
   return (
     <div id="main">

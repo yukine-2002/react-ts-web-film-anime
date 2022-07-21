@@ -45,6 +45,7 @@ export const createUserProfileDocument = async (
         email: auth.email,
         img: auth.photoURL,
         createAt: currentDate(),
+        ...additionalData
       },
       { merge: true }
     );

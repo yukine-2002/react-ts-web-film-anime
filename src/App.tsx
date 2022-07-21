@@ -44,7 +44,7 @@ function App() {
         <Route path="/profile">
              <Route path=":uid" element={<UserPages />} />
         </Route>
-       
+              
         <Route  path="login" element={selectUser ? <Navigate to='/' /> : <LoginPage />} />
 
       </Routes>

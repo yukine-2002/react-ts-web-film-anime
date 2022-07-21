@@ -32,19 +32,22 @@ const ItemSliderHeader = ({ item }: typeProps) => {
               </div>
               <div className="genres round-icon">
                 <i className="material-icons">add_circle</i>
-                {item.genres.map((it, index) => (
-                  <span key={it.slug}>
-                    {" "}
-                    {it.name} {index === item.genres.length - 1 ? ` ` : `-`}
-                  </span>
-                ))}
+                <p>
+                  {" "}
+                  {item.genres.map((it, index) => (
+                    <span key={it.slug}>
+                      {" "}
+                      {it.name} {index === item.genres.length - 1 ? ` ` : `-`}
+                    </span>
+                  ))}
+                </p>
               </div>
             </div>
             <div className="slide_header-desc">
               <p>{item.description}</p>
             </div>
             <div className="slide_header-button">
-              <button onClick={() => handlePath(nav,item.slug, item.name)}>
+              <button onClick={() => handlePath(nav, item.slug, item.name)}>
                 Xem ngay
               </button>
             </div>
@@ -52,7 +55,7 @@ const ItemSliderHeader = ({ item }: typeProps) => {
         </div>
         <div
           className="slide_content_btn_play"
-          onClick={() => handlePath(nav,item.slug, item.name)}
+          onClick={() => handlePath(nav, item.slug, item.name)}
         >
           <span className="icons">
             <i className="material-icons">play_arrow</i>

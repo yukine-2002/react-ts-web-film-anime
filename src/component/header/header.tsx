@@ -15,12 +15,11 @@ const Header = () => {
   const [isMobileBar, setIsMobileBar] = useState(false);
   const [isDropdownAuth,setDropdownAuth] = useState(false)
   const selectUser = useAppSelector((state) => state.auth!.currentUser);
-  const dispatch = useAppDispatch();
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [windowHeight, setWindowHeight] = useState(window.innerHeight);
   const [search, setSearch] = useState<string>("");
 
-  const { data, isLoading, isSuccess, refetch } = useSearch({
+  const { data, isSuccess } = useSearch({
     keyword: search,
     limit: windowHeight / 100,
     enabled: true,
@@ -129,9 +128,8 @@ const Header = () => {
                 <img src={selectUser?.img ? selectUser.img : `https://static.fullstack.edu.vn/static/media/fallback-avatar.155cdb2376c5d99ea151.jpg`} alt="" />
               </div>
               {
-                isDropdownAuth ?   <AuthDropDown /> : ''
-              }
-            
+                isDropdownAuth ?   <AuthDropDown setDropdownAuth={setDropdownAuth} /> : ''
+              }         
             </div>
           ) : (
             <div className="button-login">

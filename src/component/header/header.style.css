@@ -13,11 +13,7 @@ header .navbar {
   width: 100%;
   height: 100%;
 }
-header .navbar .navbar-mid .logo img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
+
 header .navbar .navbar-left,
 header .navbar .navbar-right,
 header .navbar .func {
@@ -31,6 +27,7 @@ header .navbar .logo {
 header .navbar .logo img {
   width: 100%;
   height: 100%;
+  object-fit: cover;
 }
 header .navbar .navbar-item {
   padding: 10px;

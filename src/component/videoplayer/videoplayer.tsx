@@ -18,8 +18,7 @@ const VideoPlayer = ({ source,info }: propVideo) => {
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [progress_bar, setProgress_bar] = useState(0);
-  const [isPlay, setIsPlay] = useState(true);
-  const [stateVolum, setStateVolume] = useState<string>(
+  const [playing, setPlaying] = useState(false);  const [stateVolum, setStateVolume] = useState<string>(
     "volume_up" || "volume_down" || "volume_off"
   );
   const [valueVolume, setValueVolume] = useState(80);
@@ -34,36 +33,35 @@ const VideoPlayer = ({ source,info }: propVideo) => {
   const refContainer = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    if (source) {
-      pauseVideo();
+    if(mainVideoRef.current){
+      mainVideoRef.current.src = source?.videoSource!
+      mainVideoRef?.current!.pause();
+      play_pause.current!.innerHTML = "play_arrow";
+      play_pause.current!.title = "play";
+      setPlaying(false);
+      console.log(source?.videoSource!)
     }
-  }, [source]);
-
-  const playVideo = () => {
-    if (play_pause.current) {
-      play_pause.current.innerHTML = "pause";
-      play_pause.current.title = "pause";
-      setIsPlay(false);
-      mainVideoRef.current?.play();
+  },[source?.videoSource])
+  
+  const handleVideo = () => {
+    if (playing) {
+      mainVideoRef?.current!.pause();
+      setPlaying(false);
+      play_pause.current!.innerHTML = "play_arrow";
+      play_pause.current!.title = "play";
+    } else {
+      mainVideoRef?.current!.play();
+      play_pause.current!.innerHTML = "pause";
+      play_pause.current!.title = "pause";
+      setPlaying(true);
     }
-  };
-  const pauseVideo = () => {
-    if (play_pause.current) {
-      play_pause.current.innerHTML = "play_arrow";
-      play_pause.current.title = "play";
-      setIsPlay(true);
-      mainVideoRef.current?.pause();
-    }
-  };
-  const handlePlayVideo = () => {
-    isPlay ? playVideo() : pauseVideo();
   };
 
   const handleMoveOver = () => {
     videoPlayerRef.current?.children[2].classList.add("active");
   };
   const handleMoveLeave = () => {
-    if (!isPlay) {
+    if (playing) {
       if (videoPlayerRef.current?.children[3].classList.contains("active")) {
         videoPlayerRef.current?.children[2].classList.add("active");
       } else {
@@ -165,8 +163,7 @@ const VideoPlayer = ({ source,info }: propVideo) => {
           poster={`${source?.thumbnail_medium}`}
           id="main-video"
           ref={mainVideoRef}
-          onPlay={playVideo}
-          onPause={pauseVideo}
+          onClick={handleVideo}
           onLoadStart={storeVideo}
           onTimeUpdate={(e) => timeUpdate(e)}
           onLoadedData={(e) => {
@@ -206,7 +203,7 @@ const VideoPlayer = ({ source,info }: propVideo) => {
               <span className="icons">
                 <i
                   ref={play_pause}
-                  onClick={handlePlayVideo}
+                  onClick={handleVideo}
                   className="material-icons play_pause"
                 >
                   {" "}

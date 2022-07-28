@@ -14,6 +14,7 @@ const HomePages = lazyLoading(() => import("./pages/homepage/homepage"));
 const WatchVideos = lazyLoading(() => import("./pages/watchvideo/watchvideo"));
 const LoginPage = lazyLoading(() => import("./pages/loginpage/loginpage"));
 const UserPages = lazyLoading(() => import('./pages/userpage/userpage'))
+const StoryPages = lazyLoading(() => import('./pages/storypage/storypage'))
 
 function App() {
   const dispatch = useAppDispatch()
@@ -45,6 +46,7 @@ function App() {
              <Route path=":uid" element={<UserPages />} />
         </Route>
               
+        <Route  path="story" element={<StoryPages /> } />
         <Route  path="login" element={selectUser ? <Navigate to='/' /> : <LoginPage />} />
 
       </Routes>

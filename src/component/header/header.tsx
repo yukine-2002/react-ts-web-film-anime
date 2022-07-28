@@ -92,12 +92,12 @@ const Header = () => {
           </div>
           <div className="navbar-item dropdown" onClick={handleDropDown}>
             <Link to={``} className="disable ">
-              <span>Mục Lục</span>
+              <span>Anime</span>
             </Link>
             <CollectionDropDown isMobile={isMobileDropdown} />
           </div>
           <div className="navbar-item">
-            <Link to={``}>
+            <Link to={`story`}>
               <span>Truyện</span>
             </Link>
           </div>

@@ -2,13 +2,21 @@ import { useInfiniteQuery, useQuery } from "react-query";
 import {
   getInfo,
   getList,
+  getMenu,
   getMovie,
   getRecently,
   getRecommender,
   getSlide,
   getSource,
+  newChapStory,
+  newStory,
   rankDate,
+  rankDayStory,
   Search,
+  storyComplete,
+  storyHot,
+  storyRecommender,
+  storyUpdate,
 } from "./service";
 import { Source } from "./type";
 interface Props {
@@ -71,27 +79,34 @@ export const useSearch = ({
     return useQuery(['search',{limit,keyword}] , ()=> Search({q : keyword , limit : limit , page : 1}), { enabled: !keyword ? false :  enabled })
   }
 
-// export const useSearch = ({
-//   keyword,
-//   limit = 24,
-//   enabled = true,
-// }: {
-//   keyword: string;
-//   limit: number;
-//   enabled?: boolean;
-//   sort?: string;
-// }) => {
-//   const fetchList = ({ pageParam = 1 }) =>
-//     Search({ q: keyword, page: pageParam, limit });
+//story 
 
-//   return useInfiniteQuery(["search", { limit, keyword }], fetchList, {
-//     enabled: !keyword ? false : enabled,
-//     getNextPageParam: ({ pagination }) => {
-     
-//       return pagination.currentPage >= pagination.totalPage
-//         ? null
-//         : pagination.currentPage + 1;
-//     },
-//   });
-// };
+export const useFetchNewChapStory = () => {
+  return useQuery(["newStoryChap"], () => newChapStory());
+}
+export const useFetchNewStory = () => {
+  return useQuery(["newStory"], () => newStory());
+}
+export const useFetchStoryRecommender= () => {
+  return useQuery(["storyRecommender"], () => storyRecommender());
+}
+export const useFetchStoryComplete= () => {
+  return useQuery(["storyComplete"], () => storyComplete());
+}
+export const useFetchStoryUpdate= () => {
+  return useQuery(["storyUpdate"], () => storyUpdate());
+}
+export const useFetchStoryHot= () => {
+  return useQuery(["storyHot"], () => storyHot());
+}
+export const useFetchRankDaySTory= () => {
+  return useQuery(["rankDay"], () => rankDayStory());
+}
+export const useFetchGetMenu= () => {
+  return useQuery(["getMenu"], () => getMenu());
+}
+
+
+
+
 

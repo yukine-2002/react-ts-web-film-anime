@@ -1,12 +1,14 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-import { BrowserRouter } from 'react-router-dom';
-import { QueryClient, QueryClientProvider } from 'react-query';
-import { Provider } from 'react-redux';
-import store from './redux/store';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import { BrowserRouter } from "react-router-dom";
+import { QueryClient, QueryClientProvider } from "react-query";
+import { Provider } from "react-redux";
+import { ReactRouter6Adapter } from "use-query-params/adapters/react-router-6";
+import store from "./redux/store";
+import { QueryParamProvider } from "use-query-params";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -16,19 +18,20 @@ const queryClient = new QueryClient({
   },
 });
 const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
+  document.getElementById("root") as HTMLElement
 );
 root.render(
   <Provider store={store}>
-  <QueryClientProvider client={queryClient}>
-    <React.StrictMode>
+    <QueryClientProvider client={queryClient}>
+      <React.StrictMode>
         <BrowserRouter>
-          <App />
+          <QueryParamProvider adapter={ReactRouter6Adapter}>
+            <App />
+          </QueryParamProvider>
         </BrowserRouter>
       </React.StrictMode>
-  </QueryClientProvider>
+    </QueryClientProvider>
   </Provider>
- 
 );
 
 // If you want to start measuring performance in your app, pass a function

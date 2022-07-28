@@ -6,9 +6,6 @@ import { currentDate } from "../../utils/utils";
 import { PostActionTypes } from "./posts.types";
 
 
-
-
-
 interface loadPost {
   type: PostActionTypes.LOADING_POST,
   payload: posts[]

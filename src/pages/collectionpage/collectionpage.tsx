@@ -1,41 +1,62 @@
-import useInfiniteScroll from "react-infinite-scroll-hook";
+import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { NumberParam, useQueryParam, useQueryParams } from "use-query-params";
 import Item from "../../component/itemslide/item";
 import { Spinner } from "../../component/lazyLoading/lazyLoading";
-import { handlePath } from "../../utils/service";
-import { useFetchList } from "../../utils/useFetchSerice";
+import Pagination from "../../component/paginate/paginate";
+import { getList, handlePath } from "../../utils/service";
+import { Anime } from "../../utils/type";
 
 
 // const ALL = [...GENRES, ...RANKINGS];
 
-
 const CollectionPage = () => {
   const nav = useNavigate();
   const param = useLocation();
+  const [page = 1, setPage] = useQueryParam('page', NumberParam);
   const [category, slug] = param.pathname.replace("/", "").split("/");
-
-
-
-  const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useFetchList({ category, slug });
-  const [sentryRef] = useInfiniteScroll({
-    loading: isFetchingNextPage,
-    hasNextPage: hasNextPage!,
-    onLoadMore: fetchNextPage,
-    rootMargin: "0px 0px 20px 0px",
-  });
-  const listAnime = data?.pages.map((item) => item.data).flat();
+  const [currentPage, setCurrentPage] = useState<number | null>(page);
+  const [totalPage, setTotalPage] = useState(0);
+  const [data,setData] = useState<Anime[]>([])
+  const [succes, setSucces] = useState(false) 
+ 
+  useEffect(() => {
+    const fetchData = async () => {
+      const fetch : any = await new Promise((resolve, reject) => {
+        const data = getList({category,slug,page:currentPage!})
+        resolve(data)
+      })
+      const {data, success, pagination } = fetch
+      setData(data)
+      setSucces(success)    
+      setTotalPage(pagination.totalPage)
+    };
+    try {
+      fetchData()
+    }catch(err){
+      console.log(err)
+    }
+  }, [currentPage]);
+  
 
   return (
     <div className="body">
       <div className="collection" style={{ marginTop: 100 + "px" }}>
         <div className="collection-list">
-          {!isLoading ? (
-            listAnime!.map((item,index) => (
+          {succes ? (
+            data!.map((item, index) => (
               <Item
                 key={index}
                 anime={item}
-                onClick={() => handlePath(nav,item.slug, item.latestEpisode!.name ? item.latestEpisode!.name : item.name)}
+                onClick={() =>
+                  handlePath(
+                    nav,
+                    item.slug,
+                    item.latestEpisode!.name
+                      ? item.latestEpisode!.name
+                      : item.name
+                  )
+                }
               />
             ))
           ) : (
@@ -43,11 +64,7 @@ const CollectionPage = () => {
           )}
         </div>
       </div>
-      {(!isFetchingNextPage || hasNextPage) && (
-        <div ref={sentryRef}>
-          <Spinner />
-        </div>
-      )}
+      <Pagination maxPage={totalPage} currentPage={currentPage!} setPage={setPage} setCurrentPage={setCurrentPage} />
     </div>
   );
 };

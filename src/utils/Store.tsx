@@ -9,8 +9,7 @@ class Store {
         if (!rawList) return;
     
         const list: object[] = JSON.parse(rawList);
-    
-        console.log(list)
+  
         localStorage.setItem(
           storageKey,
           JSON.stringify(list.filter((item) => !compareTwoObject(item, filter)))

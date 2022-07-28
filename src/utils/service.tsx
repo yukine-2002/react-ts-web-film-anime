@@ -1,5 +1,6 @@
+import { async } from "@firebase/util";
 import axios from "axios";
-import { Anime, AnimeInfo, Source } from "./type";
+import { Anime, AnimeInfo, Source, Story } from "./type";
 
 export const instance = axios.create({
   baseURL: `https://json-api-anime.herokuapp.com/api/v1`,
@@ -81,3 +82,40 @@ export const rankDate = async (): Promise<Anime[]> => {
   const { data } = await instance.get("/ranking/ngay");
   return data.data;
 };
+
+export const storyInstance = axios.create({
+  baseURL : 'https://json-api-story.herokuapp.com/api/v2'
+})
+export const newChapStory = async() : Promise<Story[]> => {
+  const {data} = await storyInstance.get('/newChapStory')
+  return data.data
+}
+export const newStory = async() : Promise<Story[]> => {
+  const {data} = await storyInstance.get('/newStory')
+  return data.data
+}
+export const storyRecommender = async() : Promise<Story[]> => {
+  const {data} = await storyInstance.get('/storyRecommender')
+  return data.data
+}
+export const storyComplete = async() : Promise<Story[]> => {
+  const {data} = await storyInstance.get('/storyComplete')
+  return data.data
+}
+export const storyUpdate = async() : Promise<Story[]> => {
+  const {data} = await storyInstance.get('/storyUpdate')
+  return data.data
+}
+export const storyHot = async() : Promise<Story[]> => {
+  const {data} = await storyInstance.get('/storyHot')
+  return data.data
+}
+export const rankDayStory = async() : Promise<Story[]> => {
+  const {data} = await storyInstance.get('/rankDay')
+  return data.data
+}
+export const getMenu = async() : Promise<Story[]> => {
+  const {data} = await storyInstance.get('/getMenu')
+  return data.data
+}
+

@@ -1,5 +1,5 @@
 import SlickCarousel from "../../component/slick-carousel/slick-carousel";
-import ItemSlideMovie from "../../component/itemslideMovie/itemslideMovie";
+import ItemSlideMovie from "../../component/itemslide/itemslideMovie";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { useNavigate } from "react-router-dom";
@@ -22,110 +22,9 @@ import {
   fetchAnimeInfoSlide,
   fetchAnimeRank,
 } from "../../redux/collection/collection.actions";
+import { settings, settingSlide, settingsRcm } from "../../utils/settingCarousel";
 
-const settings = {
-  infinite: false,
-  speed: 500,
-  slidesToShow: 6,
-  slidesToScroll: 1,
-  initialSlide: 0,
 
-  responsive: [
-    {
-      breakpoint: 1460,
-      settings: {
-        slidesToShow: 4,
-        slidesToScroll: 1,
-        initialSlide: 0,
-      },
-    },
-    {
-      breakpoint: 1260,
-      settings: {
-        slidesToShow: 3,
-        slidesToScroll: 1,
-        initialSlide: 0,
-      },
-    },
-    {
-      breakpoint: 1024,
-      settings: {
-        slidesToShow: 3,
-        slidesToScroll: 1,
-        initialSlide: 0,
-      },
-    },
-    {
-      breakpoint: 750,
-      settings: {
-        slidesToShow: 2,
-        slidesToScroll: 2,
-      },
-    },
-    {
-      breakpoint: 530,
-      settings: {
-        slidesToShow: 1,
-        slidesToScroll: 1,
-      },
-    },
-  ],
-};
-const settingSlide = {
-  dots: true,
-  infinite: true,
-  speed: 3000,
-  slidesToShow: 1,
-  slidesToScroll: 1,
-  arrows: false,
-  autoplay: true,
-  autoplaySpeed: 25000,
-};
-
-const settingsRcm = {
-  infinite: true,
-  slidesToShow: 4,
-  speed: 500,
-
-  responsive: [
-    {
-      breakpoint: 1460,
-      settings: {
-        slidesToShow: 3,
-        slidesToScroll: 1,
-      },
-    },
-    {
-      breakpoint: 1260,
-      settings: {
-        slidesToShow: 3,
-        slidesToScroll: 1,
-      },
-    },
-    {
-      breakpoint: 1024,
-      settings: {
-        slidesToShow: 2,
-        slidesToScroll: 1,
-      },
-    },
-    {
-      breakpoint: 750,
-      settings: {
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        centerMode: true,
-      },
-    },
-    {
-      breakpoint: 450,
-      settings: {
-        slidesToShow: 1,
-        slidesToScroll: 1,
-      },
-    },
-  ],
-};
 
 const HomePage = () => {
   const nav = useNavigate();

@@ -1,25 +1,6 @@
 import React from "react";
 
 
-
-export interface Route {
-  name: string;
-  path: string;
-  component: React.ComponentType;
-  dropdown?: boolean;
-  dropdownData?: any[];
-  header: boolean;
-  dropdownPath?: (data: any) => string;
-  listKey?: (data: any) => string;
-  navigation?: boolean;
-  icon?: React.ComponentType<Icon>;
-}
-
-export interface Icon {
-  size?: number;
-  className?: string;
-}
-
 export interface Episodes {
   id: number;
   name: number;
@@ -154,4 +135,24 @@ export interface posts{
   url : string,
   like : [],
   date : string
+}
+
+
+//story 
+export interface storyChap {
+  name: string;
+  update: string;
+  url: string
+}
+export interface Story {
+  id: number;
+  name: string;
+  img: string;
+  dateUpdate: string;
+  slug: string;
+  chap : string;
+  url : string;
+  view: string;
+  storyChap : storyChap[]
+  
 }

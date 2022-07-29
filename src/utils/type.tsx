@@ -1,6 +1,5 @@
 import React from "react";
 
-
 export interface Episodes {
   id: number;
   name: number;
@@ -48,7 +47,7 @@ export interface AnimeLocalStorage {
   subTeams: string[];
   description: string;
   episodes: Episodes[];
-  time : string;
+  time: string;
 }
 
 export interface Anime {
@@ -62,9 +61,9 @@ export interface Anime {
     name: string;
     views: number;
   };
-  episodeIndex?:number
+  episodeIndex?: number;
 }
-  
+
 export interface GetListResponse {
   success: boolean;
   data: Anime[];
@@ -122,27 +121,26 @@ export const RANKINGS = [
     name: "BXH năm",
   },
 ];
-export interface comment  {
-  mid: string,
-  uid: string,
-  content: string,
-  date: string,
-};
-export interface posts{
-  pid : string,
-  content : string ,
-  comment : comment[],
-  url : string,
-  like : [],
-  date : string
+export interface comment {
+  mid: string;
+  uid: string;
+  content: string;
+  date: string;
+}
+export interface posts {
+  pid: string;
+  content: string;
+  comment: comment[];
+  url: string;
+  like: [];
+  date: string;
 }
 
-
-//story 
+//story
 export interface storyChap {
   name: string;
   update: string;
-  url: string
+  url: string;
 }
 export interface Story {
   id: number;
@@ -150,9 +148,29 @@ export interface Story {
   img: string;
   dateUpdate: string;
   slug: string;
-  chap : string;
-  url : string;
+  chap: string;
+  url: string;
   view: string;
-  storyChap : storyChap[]
-  
+  storyChap: storyChap[];
+}
+export interface chapters {
+  id: number;
+  name: string;
+  special_name: number;
+  title: string;
+  slug: string;
+  views: string;
+  created_at: string;
+}
+export interface infoStory {
+  id: number;
+  name: string;
+  auth: string;
+  poster: string;
+  thumbnail: string;
+  status: string;
+  latest: string;
+  views: string;
+  description: string;
+  chapters: chapters[];
 }

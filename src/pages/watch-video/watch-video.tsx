@@ -3,7 +3,7 @@ import Episode from "../../component/episode/episode";
 import { Spinner } from "../../component/lazyLoading/lazyLoading";
 import VideoPlayer from "../../component/videoplayer/videoplayer";
 import { useFetchInfor, useFetchSoure } from "../../utils/useFetchSerice";
-import "./watchvideo.style.css";
+import "./watch-video.style.css";
 
 const WatchVideo = () => {
   const param = useParams();
@@ -15,10 +15,10 @@ const WatchVideo = () => {
   )[0];
   const { data: source } = useFetchSoure(
     info?.id!,
-    filterFilm?.name! - 1 || 0,
+    filterFilm?.name! - 1 < 0 ? 0 :  filterFilm?.name! - 1 || 0,
     isInfoLoading
   );
-   
+
   function randomColor() {
     return (
       "#" +
@@ -28,12 +28,14 @@ const WatchVideo = () => {
     );
   }
   
+  
   return (
     <div className="body">
       <div className="video-container">
         {source === undefined ? (
            <Spinner
            isLoading={false}
+           timeLoading={100000}
            text="films đang được cập nhật vui lòng trở lại sau"
          />
         ) : source?.videoSource ? (
@@ -41,6 +43,7 @@ const WatchVideo = () => {
         ) : (
           <Spinner
             isLoading={source?.videoSource ? true : false}
+            timeLoading={100000}
             text="films đang được cập nhật vui lòng trở lại sau"
           />
         )}

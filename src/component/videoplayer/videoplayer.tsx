@@ -8,6 +8,7 @@ import React, {
 import screenfull from "screenfull";
 import Store from "../../utils/Store";
 import { AnimeInfo, Source } from "../../utils/type";
+import { Spinner } from "../lazyLoading/lazyLoading";
 
 interface propVideo {
   info? : AnimeInfo,
@@ -23,6 +24,7 @@ const VideoPlayer = ({ source,info }: propVideo) => {
   );
   const [valueVolume, setValueVolume] = useState(80);
   const [timeShow, setTimeShow] = useState<string>("0:00");
+  const [canPlay,setCanPlay] = useState(false)
   const mainVideoRef = useRef<HTMLVideoElement | null>(null);
   const videoPlayerRef = useRef<HTMLDivElement | null>(null);
   const progressAreatime = useRef<HTMLDivElement | null>(null);
@@ -31,7 +33,7 @@ const VideoPlayer = ({ source,info }: propVideo) => {
   const play_pause = useRef<HTMLLIElement | null>(null);
   const volume_range = useRef<HTMLInputElement | null>(null);
   const refContainer = useRef<HTMLDivElement | null>(null);
-
+  
   useEffect(() => {
     if(mainVideoRef.current){
       mainVideoRef.current.src = source?.videoSource!
@@ -39,7 +41,7 @@ const VideoPlayer = ({ source,info }: propVideo) => {
       play_pause.current!.innerHTML = "play_arrow";
       play_pause.current!.title = "play";
       setPlaying(false);
-      console.log(source?.videoSource!)
+      console.log(source?.videoSource)
     }
   },[source?.videoSource])
   
@@ -93,6 +95,7 @@ const VideoPlayer = ({ source,info }: propVideo) => {
 
     mainVideoRef.current!.currentTime =
       (clickOffset / progressWith) * vidoeDuration;
+      setCanPlay(false)
   };
   const changeVolume = (e: ChangeEvent<HTMLInputElement>) => {
     if (valueVolume === 0) {
@@ -133,7 +136,7 @@ const VideoPlayer = ({ source,info }: propVideo) => {
       screenfull.toggle(refContainer.current);
     }
   };
- 
+  
   const storeVideo = ()=> {
     const {thumbnail, ...rest } = info!;
    
@@ -146,7 +149,6 @@ const VideoPlayer = ({ source,info }: propVideo) => {
         time: source!.full_name,
       }
     );   
-
    
   }
 
@@ -165,6 +167,7 @@ const VideoPlayer = ({ source,info }: propVideo) => {
           ref={mainVideoRef}
           onClick={handleVideo}
           onLoadStart={storeVideo}
+          onCanPlay={()=> setCanPlay(true)}
           onTimeUpdate={(e) => timeUpdate(e)}
           onLoadedData={(e) => {
             setDuration(e.currentTarget.duration)
@@ -172,7 +175,7 @@ const VideoPlayer = ({ source,info }: propVideo) => {
           playsInline>
           <source  src={`${source?.videoSource}`} type="video/mp4" />
         </video>
-
+             
         <div className="progressAreaTime" ref={progressAreatime}>
           {timeShow}
         </div>
@@ -280,6 +283,9 @@ const VideoPlayer = ({ source,info }: propVideo) => {
               <li data-speed="1.75">1.75</li>
             </ul>
           </div>
+        </div>
+        <div className="wait-video-can-play" style={{display : canPlay ? 'none' : 'flex'}}>
+          <img src="https://cutewallpaper.org/21/loading-gif-transparent-background/Tag-For-Loading-Bar-Gif-Transparent-Loading-Gif-.gif" />
         </div>
       </div>
     </div>

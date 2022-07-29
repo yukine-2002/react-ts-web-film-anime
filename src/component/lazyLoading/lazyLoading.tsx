@@ -2,11 +2,12 @@ import React, { lazy, Suspense, useState } from "react";
 import "./lazyLoading.css";
 interface propText {
   text?: string,
-  isLoading? : boolean
+  isLoading? : boolean,
+  timeLoading? : number
 }
-export const Spinner = ({ text,isLoading }: propText) => {
+export const Spinner = ({ text,isLoading,timeLoading = 10000 }: propText) => {
   const [isUpdate, setIsUpdate] = useState(false || isLoading);
-  setTimeout(() => setIsUpdate(true), 10000);
+  setTimeout(() => setIsUpdate(true), timeLoading);
   return (
     <div>
       <div className="SpinnerOverlay">

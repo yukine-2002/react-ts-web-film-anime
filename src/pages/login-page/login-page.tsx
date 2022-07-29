@@ -11,7 +11,7 @@ import {
   signInWithFacebook,
   signInWithGoogle,
 } from "../../firebase/firebase";
-import "./loginpage.style.css";
+import "./login-page.style.css";
 
 const LoginPage = () => {
   const [isNormalLogin, setIsNormalLogin] = useState(false);

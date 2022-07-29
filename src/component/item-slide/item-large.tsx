@@ -1,6 +1,15 @@
+
+import { useNavigate } from "react-router-dom";
 import { Story } from "../../utils/type";
 
 const ItemLarge = ({ item }: { item: Story }) => {
+
+  const nav = useNavigate()
+
+  const handleRouterStory = (slug : string) => {
+    nav(`story/${slug}`)
+  }
+
   return (
     <div className="item-large">
       <div className="item-thumbnail">

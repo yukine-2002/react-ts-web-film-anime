@@ -1,4 +1,4 @@
-import "./userpage.style.css";
+import "./user-page.style.css";
 import bg_profile from "../../assests/bg-profile.jpg";
 import { useAppDispatch, useAppSelector } from "../../redux/useTypeSelector";
 import { useEffect, useRef, useState } from "react";

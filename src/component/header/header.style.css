@@ -3,7 +3,7 @@ header {
   width: 100%;
   top: 0;
   left: 0;
-  height: 85px;
+  height: 65px;
   z-index: 1000;
 }
 header .navbar {
@@ -21,7 +21,7 @@ header .navbar .func {
   align-items: center;
 }
 header .navbar .logo {
-  width: 150px;
+  width: 95px;
   height: 100px;
 }
 header .navbar .logo img {
@@ -39,11 +39,11 @@ header .navbar .navbar-item {
 header .navbar .button-login {
   padding: 7px 15px;
   margin: 5px 10px;
-  background-color: var(--colorItem);
   border-radius: 5px;
+  font-weight: 600;
 }
 header .navbar .search {
-  border-radius: 15px;
+  border-radius: 5px;
   border: 1px solid #fff;
   margin: 5px 10px;
   position: relative;
@@ -58,7 +58,7 @@ header .navbar .search i {
 header .navbar .search input {
   outline: none;
   border: none;
-  padding: 10px 20px;
+  padding: 8px 20px;
   width: 300px;
   border-radius: 50px;
   background-color: transparent;

@@ -1,6 +1,7 @@
 import { useInfiniteQuery, useQuery } from "react-query";
 import {
   getInfo,
+  getInfoStory,
   getList,
   getMenu,
   getMovie,
@@ -104,6 +105,9 @@ export const useFetchRankDaySTory= () => {
 }
 export const useFetchGetMenu= () => {
   return useQuery(["getMenu"], () => getMenu());
+}
+export const useFetchGeInfoStory= (slug:string) => {
+  return useQuery(["InfoStory",{slug}], () => getInfoStory(slug));
 }
 
 

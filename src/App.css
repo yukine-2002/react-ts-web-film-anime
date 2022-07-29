@@ -14,12 +14,13 @@ body {
   background: linear-gradient(to top left, #002836 7%, #000000 138%);
   font-family: "Open Sans", sans-serif;
 }
+/* #303030 */
 .body {
   max-width: 93vw;
   margin: auto;
 }
 .m-top-100 {
-  margin-top: 100px;
+  margin-top: 80px;
 }
 .m-top-50 {
   margin-top: 50px;

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { NumberParam, useQueryParam, useQueryParams } from "use-query-params";
-import Item from "../../component/itemslide/item";
+import Item from "../../component/item-slide/item";
 import { Spinner } from "../../component/lazyLoading/lazyLoading";
 import Pagination from "../../component/paginate/paginate";
 import { getList, handlePath } from "../../utils/service";

@@ -3,18 +3,19 @@ import "./App.css";
 import "./grid.css";
 import Header from "./component/header/header";
 import lazyLoading from "./component/lazyLoading/lazyLoading";
-import CollectionPage from "./pages/collectionpage/collectionpage";
+import CollectionPage from "./pages/collection-page/collection-page";
 import { useEffect } from "react";
 import { auth, createUserProfileDocument } from "./firebase/firebase";
 import { useAppDispatch, useAppSelector } from "./redux/useTypeSelector";
 import { setCurrentUser } from "./redux/auth/auth.action";
 
 
-const HomePages = lazyLoading(() => import("./pages/homepage/homepage"));
-const WatchVideos = lazyLoading(() => import("./pages/watchvideo/watchvideo"));
-const LoginPage = lazyLoading(() => import("./pages/loginpage/loginpage"));
-const UserPages = lazyLoading(() => import('./pages/userpage/userpage'))
-const StoryPages = lazyLoading(() => import('./pages/storypage/storypage'))
+const HomePages = lazyLoading(() => import("./pages/home-page/home-page"));
+const WatchVideos = lazyLoading(() => import("./pages/watch-video/watch-video"));
+const LoginPage = lazyLoading(() => import("./pages/login-page/login-page"));
+const UserPages = lazyLoading(() => import('./pages/user-page/user-page'))
+const StoryPages = lazyLoading(() => import('./pages/story-page/story-page'))
+const InfoStoryPage = lazyLoading(() => import('./pages/info-story-page/info-story-page'))
 
 function App() {
   const dispatch = useAppDispatch()
@@ -45,10 +46,14 @@ function App() {
         <Route path="/profile">
              <Route path=":uid" element={<UserPages />} />
         </Route>
-              
         <Route  path="story" element={<StoryPages /> } />
-        <Route  path="login" element={selectUser ? <Navigate to='/' /> : <LoginPage />} />
 
+        <Route path="/story">
+             <Route path=":slug" element={<InfoStoryPage />} />
+        </Route>
+        
+        <Route  path="login" element={selectUser ? <Navigate to='/' /> : <LoginPage />} />
+        
       </Routes>
 
       <footer className="section">

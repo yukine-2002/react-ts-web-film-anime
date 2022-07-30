@@ -174,3 +174,7 @@ export interface infoStory {
   description: string;
   chapters: chapters[];
 }
+export interface imgStory {
+  alt : string,
+  src : string
+}

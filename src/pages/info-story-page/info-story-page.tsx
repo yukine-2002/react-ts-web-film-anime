@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import ItemLarge from "../../component/item-slide/item-large";
 import ItemMedium from "../../component/item-slide/item-medium";
 import { Spinner } from "../../component/lazyLoading/lazyLoading";
@@ -14,11 +14,13 @@ import "./info-story-page.style.css";
 
 const InfoStoryPage = () => {
   const { slug } = useParams();
+  const nav = useNavigate()
   const [allChap, setAllChap] = useState(false);
   const { data, isSuccess } = useFetchGeInfoStory(slug!);
   const { data: dataStoryRecommender, isSuccess: isSsStoryRecommender } =
     useFetchStoryRecommender();
   const { data: dataNewStory, isSuccess: isSsNewStory } = useFetchNewStory();
+  
   const convetTime = (date: string) => {
     const oldDate = new Date(date);
     const nowDate = new Date(Date.now());
@@ -81,6 +83,15 @@ const InfoStoryPage = () => {
         : oldDate.getFullYear();
     return days + "-" + months + "-" + years;
   };
+  const handleReadStory = (chap : string) => {
+    nav(chap)
+  }
+  const readFirstChap = () => {
+    nav(data?.chapters[data.chapters.length - 1].slug!)
+  }
+  const readLastChap = () => {
+    nav(data?.latest.replace(" ","-")!)
+  }
   return (
     <div>
       {isSuccess && isSsStoryRecommender && isSsNewStory ? (
@@ -123,14 +134,14 @@ const InfoStoryPage = () => {
                     <p>{data?.description}</p>
                   </div>
                   <div className="button-read">
-                    <button>Đọc từ đầu</button>
-                    <button>Đọc Chap mới nhất</button>
+                    <button onClick={readFirstChap}>Đọc từ đầu</button>
+                    <button onClick={readLastChap}>Đọc Chap mới nhất</button>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-
+          <div className="space"></div>
           <div className="body body-info-story">
             <div className="title">
               <h3>Danh sách các chap</h3>
@@ -139,13 +150,13 @@ const InfoStoryPage = () => {
               {data?.chapters.map((item, index) =>
                 !allChap ? (
                   index < 50 && (
-                    <div className="item-chap" key={item.id}>
+                    <div className="item-chap" key={item.id} onClick={() => handleReadStory(item.slug)}>
                       <h4>Chạp {item.name}</h4>
                       <span>{convetTime(item.created_at)}</span>
                     </div>
                   )
                 ) : (
-                  <div className="item-chap" key={item.id}>
+                  <div className="item-chap" key={item.id} onClick={() => handleReadStory(item.slug)}>
                     <h4>Chạp {item.name}</h4>
                     <span>{convetTime(item.created_at)}</span>
                   </div>

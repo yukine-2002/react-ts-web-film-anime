@@ -1,5 +1,6 @@
 import { useInfiniteQuery, useQuery } from "react-query";
 import {
+  getImgStory,
   getInfo,
   getInfoStory,
   getList,
@@ -108,6 +109,9 @@ export const useFetchGetMenu= () => {
 }
 export const useFetchGeInfoStory= (slug:string) => {
   return useQuery(["InfoStory",{slug}], () => getInfoStory(slug));
+}
+export const useFetchGetImgStory= (slug:string,chap:string,enable:boolean) => {
+  return useQuery(["InfoStory",{slug,chap}], () => getImgStory(slug,chap),{enabled : enable});
 }
 
 

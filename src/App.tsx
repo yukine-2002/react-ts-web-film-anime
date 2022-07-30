@@ -8,6 +8,7 @@ import { useEffect } from "react";
 import { auth, createUserProfileDocument } from "./firebase/firebase";
 import { useAppDispatch, useAppSelector } from "./redux/useTypeSelector";
 import { setCurrentUser } from "./redux/auth/auth.action";
+import ReadStoryPage from "./pages/read-story-page/read-story-page";
 
 
 const HomePages = lazyLoading(() => import("./pages/home-page/home-page"));
@@ -50,6 +51,7 @@ function App() {
 
         <Route path="/story">
              <Route path=":slug" element={<InfoStoryPage />} />
+             <Route path=":slug/:chap" element={<ReadStoryPage />} />
         </Route>
         
         <Route  path="login" element={selectUser ? <Navigate to='/' /> : <LoginPage />} />

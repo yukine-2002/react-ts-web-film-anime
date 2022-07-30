@@ -1,6 +1,6 @@
 import { async } from "@firebase/util";
 import axios from "axios";
-import { Anime, AnimeInfo, infoStory, Source, Story } from "./type";
+import { Anime, AnimeInfo, imgStory, infoStory, Source, Story } from "./type";
 
 export const instance = axios.create({
   baseURL: `https://json-api-anime.herokuapp.com/api/v1`,
@@ -122,4 +122,7 @@ export const getInfoStory = async(slug : string) : Promise<infoStory> => {
   const {data} = await storyInstance.get(`/story/${slug}`)
   return data.data
 }
-
+export const getImgStory = async(slug : string,chap:string) : Promise<imgStory[]> => {
+  const {data} = await storyInstance.get(`/story/${slug}/${chap}`)
+  return data.data
+}

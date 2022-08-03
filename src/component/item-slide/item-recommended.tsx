@@ -1,15 +1,16 @@
 import { useNavigate } from "react-router-dom";
-import { handlePath } from "../../utils/service";
+import { handlePath, handlePathInfo } from "../../utils/service";
 import { AnimeInfo } from "../../utils/type";
 
 interface typeProps {
   item: AnimeInfo;
+  onClick?: () => void;
 }
 
-const ItemRecommended = ({ item }: typeProps) => {
-  const nav = useNavigate()
+const ItemRecommended = ({ item , onClick}: typeProps) => {
+
   return (
-    <div className="item_recommended" onClick={() => handlePath(nav,item.slug, item.name)}>
+    <div className="item_recommended" onClick={onClick}>
       <div className="item_recommended-img">
         <img src={item.thumbnail} alt={item.name} />
         <div className="overlay"> </div>

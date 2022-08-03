@@ -162,11 +162,13 @@ const VideoPlayer = ({ source,info }: propVideo) => {
       >
         <video
           preload="none"
-          poster={`${source?.thumbnail_medium}`}
           id="main-video"
           ref={mainVideoRef}
           onClick={handleVideo}
           onLoadStart={storeVideo}
+          onError = {() => console.log("error")}
+          onSuspend = {() => console.log("onSuspend")}
+          onWaiting = {() =>setCanPlay(false)}
           onCanPlay={()=> setCanPlay(true)}
           onTimeUpdate={(e) => timeUpdate(e)}
           onLoadedData={(e) => {

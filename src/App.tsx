@@ -17,6 +17,7 @@ const LoginPage = lazyLoading(() => import("./pages/login-page/login-page"));
 const UserPages = lazyLoading(() => import('./pages/user-page/user-page'))
 const StoryPages = lazyLoading(() => import('./pages/story-page/story-page'))
 const InfoStoryPage = lazyLoading(() => import('./pages/info-story-page/info-story-page'))
+const InfoAnimePage = lazyLoading(() => import('./pages/info-anime-page/info-anime-page'))
 
 function App() {
   const dispatch = useAppDispatch()
@@ -37,10 +38,10 @@ function App() {
 
         <Route path="/" element={<HomePages />} />
 
-        <Route path="/watch">
+        <Route path="/anime">
           <Route path=":slug/:name" element={<WatchVideos />} />
         </Route>
-
+        <Route path="/anime/:slug" element={<InfoAnimePage />} />
         <Route path="/:category">
           <Route path=":slug" element={<CollectionPage />} />
         </Route>

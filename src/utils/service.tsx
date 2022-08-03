@@ -28,8 +28,12 @@ interface SearchProps {
 }
 
 export const handlePath = (nav: any, slug: string, name: string) => {
-  nav(`/watch/${slug}/${name}`);
+  nav(`anime/${slug}/${name}`);
 };
+export const handlePathInfo = (nav: any, slug: string) => {
+  nav(`anime/${slug}`);
+};
+
 
 export const getSlide = async (): Promise<Anime[]> => {
   const { data } = await instance.get("/slide");

@@ -93,3 +93,55 @@ export const settingsRcm = {
     },
   ],
 };
+
+
+export const settingEpisode = {
+  infinite: false,
+  speed: 500,
+  slidesToShow: 6,
+  slidesToScroll: 6,
+  initialSlide: 0,
+
+  responsive: [
+    {
+      breakpoint: 1460,
+      settings: {
+        slidesToShow: 5,
+        slidesToScroll: 5,
+        initialSlide: 0,
+      },
+    },
+    {
+      breakpoint: 1260,
+      settings: {
+        slidesToShow: 4,
+        slidesToScroll: 4,
+        initialSlide: 1,
+      },
+    },
+    {
+      breakpoint: 1024,
+      settings: {
+        slidesToShow: 4,
+        slidesToScroll: 4,
+        initialSlide: 1,
+      },
+    },
+    {
+      breakpoint: 750,
+      settings: {
+        slidesToShow: 3,
+        slidesToScroll: 2,
+        initialSlide: 1,
+      },
+    },
+    {
+      breakpoint: 530,
+      settings: {
+        slidesToShow: 2,
+        slidesToScroll: 1,
+        initialSlide: 1,
+      },
+    },
+  ],
+};

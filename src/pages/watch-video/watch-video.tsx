@@ -1,7 +1,9 @@
 import { useParams } from "react-router-dom";
 import Episode from "../../component/episode/episode";
 import { Spinner } from "../../component/lazyLoading/lazyLoading";
+import SlickCarousel from "../../component/slick-carousel/slick-carousel";
 import VideoPlayer from "../../component/videoplayer/videoplayer";
+import { settingEpisode } from "../../utils/settingCarousel";
 import { useFetchInfor, useFetchSoure } from "../../utils/useFetchSerice";
 import "./watch-video.style.css";
 
@@ -15,7 +17,7 @@ const WatchVideo = () => {
   )[0];
   const { data: source } = useFetchSoure(
     info?.id!,
-    filterFilm?.name! - 1 < 0 ? 0 :  filterFilm?.name! - 1 || 0,
+    filterFilm?.name! - 1 < 0 ? 0 : filterFilm?.name! - 1 || 0,
     isInfoLoading
   );
 
@@ -27,19 +29,25 @@ const WatchVideo = () => {
       ).join("")
     );
   }
-  
-  
+
   return (
     <div className="body">
       <div className="video-container">
         {source === undefined ? (
-           <Spinner
-           isLoading={false}
-           timeLoading={100000}
-           text="films đang được cập nhật vui lòng trở lại sau"
-         />
+          <Spinner
+            isLoading={false}
+            timeLoading={100000}
+            text="films đang được cập nhật vui lòng trở lại sau"
+          />
         ) : source?.videoSource ? (
-          <VideoPlayer source={source} info={info} />
+          <div>
+            <VideoPlayer source={source} info={info} />
+            <div className="title m-top-50 m-bottom-50">
+              <h3>
+                {source?.film_name || info?.name} - {source?.full_name}
+              </h3>
+            </div>
+          </div>
         ) : (
           <Spinner
             isLoading={source?.videoSource ? true : false}
@@ -48,43 +56,17 @@ const WatchVideo = () => {
           />
         )}
         <div className="intro">
-          <div className="title m-top-50 m-bottom-50">
-            <h3>
-              {source?.film_name || info?.name} - {source?.full_name}
-            </h3>
-          </div>
-
-          <div className="intro-content">
-            <div className="intro-view">
-              <h4>Lượt xem :</h4>
-              <span>{source?.views} Lượt xem</span>
+          <div className="episode-anime">
+            <div className="episode-title">
+              <h4>Danh sách các tập</h4>
             </div>
-
-            <h4>Thê loại :</h4>
-            <div className="intro-genres">
-              {info?.genres.map((item) => (
-                <div key={item.slug} className="intro-genres-collection">
-                  <span style={{ background: `${randomColor()}` }}>
-                    {item.name}
-                  </span>
-                </div>
-              ))}
-            </div>
-            <h4>Team Sub :</h4>
-            <div className="teamsub">
-              <span>Phim 1080</span>
-            </div>
-            <h4>Nội dung :</h4>
-            <div className="intro-description">
-              <p>{info?.description}</p>
-            </div>
-          </div>
-
-          <div className="episode-title">
-            <h4>Danh sách các tập</h4>
+            <SlickCarousel setting={settingEpisode} className="episode-list">
+               {
+                info?.episodes.map(item => <Episode key={item.id} Episodes={item!} />)
+               }     
+            </SlickCarousel>
           </div>
         </div>
-        <Episode animeInfo={info!} />
       </div>
     </div>
   );

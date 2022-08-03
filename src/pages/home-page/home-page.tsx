@@ -15,7 +15,7 @@ import Item from "../../component/item-slide/item";
 import ItemSliderHeader from "../../component/item-slide/item-slide-header";
 import { useEffect } from "react";
 import { Anime } from "../../utils/type";
-import { handlePath } from "../../utils/service";
+import { handlePath, handlePathInfo } from "../../utils/service";
 import ItemRecommended from "../../component/item-slide/item-recommended";
 import { useAppDispatch, useAppSelector } from "../../redux/useTypeSelector";
 import {
@@ -99,7 +99,7 @@ const HomePage = () => {
                   <Item
                     key={item.slug}
                     anime={item}
-                    onClick={() => handlePath(nav, item.slug, item.name)}
+                    onClick={() => handlePathInfo(nav, item.slug)}
                   />
                 ))}
               </SlickCarousel>
@@ -140,7 +140,7 @@ const HomePage = () => {
                 className="slick-slider-recommender"
               >
                 {selectAnimeRank.map((item) => (
-                  <ItemRecommended key={item.slug} item={item} />
+                  <ItemRecommended key={item.slug} item={item}  onClick={() => handlePathInfo(nav, item.slug)} />
                 ))}
               </SlickCarousel>
             </div>
@@ -154,7 +154,7 @@ const HomePage = () => {
                   <ItemSlideMovie
                     key={item.slug}
                     anime={item}
-                    onClick={() => handlePath(nav, item.slug, item.name)}
+                    onClick={() => handlePathInfo(nav, item.slug)}
                   />
                 ))}
               </SlickCarousel>

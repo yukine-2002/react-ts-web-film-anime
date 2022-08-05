@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
+import Comment from "../../component/comment/comment";
 import Episode from "../../component/episode/episode";
 import Item from "../../component/item-slide/item";
 import ItemRecommended from "../../component/item-slide/item-recommended";
@@ -7,7 +8,6 @@ import { Spinner } from "../../component/lazyLoading/lazyLoading";
 import SlickCarousel from "../../component/slick-carousel/slick-carousel";
 import { fetchAnimeRank } from "../../redux/collection/collection.actions";
 import { useAppDispatch, useAppSelector } from "../../redux/useTypeSelector";
-import { handlePathInfo } from "../../utils/service";
 import { settingEpisode, settings, settingsRcm } from "../../utils/settingCarousel";
 import { useFetchInfor, useFetchRankDay, useFetchRecommender } from "../../utils/useFetchSerice";
 import "./info-anime-page.style.css";
@@ -36,7 +36,6 @@ const InfoAnimePage = () => {
       console.log(2)
       nav(path);
     }
-  
   };
   function randomColor() {
     return (
@@ -179,7 +178,7 @@ const InfoAnimePage = () => {
                 ))}
               </SlickCarousel>
             </div>
-
+            <Comment slug = {slug!}/>
           </div>
         </div>
       ) : (

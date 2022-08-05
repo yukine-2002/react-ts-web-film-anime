@@ -1,0 +1,91 @@
+.title-comment {
+    margin: 10px 0;
+
+}
+.title-comment h4 {
+    color: #ffffff80;
+}
+.header-commnent{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    position: relative;
+}
+.body-comment .profile-form{
+    background-color: unset !important;
+    border-radius: 2px;
+    padding: 10px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.body-comment .content-header-right {
+    width: 100%;
+    background-color: transparent !important;
+    border-radius: 8px;
+    box-shadow: unset !important;
+}
+.body-comment .profile-form img {
+    border-radius: 50%;
+    cursor: pointer;
+    height: 50px;
+    margin-left: 12px;
+    margin-right: 12px;
+    object-fit: cover;
+    width: 50px;
+}
+.body-comment .profile-form .form-input {
+    width: 100%;
+    height: 100%;
+}
+.body-comment  .profile-form h3 {
+    margin: 5px 0;
+    font-size: 0.9rem;
+    color: rgb(217, 229, 240);
+}
+.body-comment  .form-input p {
+    color: #fff;
+    font-size: 0.8rem;
+}
+.comment-field {
+    width: 100%;
+}
+.comment-field textarea:focus {
+    background-size: 100% 1px,100% 1px;
+    outline: 0;
+}
+.avt-comment {
+    width: 2.5625rem;
+    height: 2.5625rem;
+    position: relative;
+}
+.avt-comment img{
+    width: 100%;
+    height: 100%;
+    border-radius: 100%;
+}
+textarea[rows] {
+    height: auto;
+}
+textarea{
+    padding: 0.5rem;
+    user-select: auto;
+    max-width: 100%;
+    display: block;
+    min-height: 50px;
+    overflow: hidden;
+    width: 100%;
+    color: #ffffff80;
+    border: 0;
+    outline: none;
+    background: transparent no-repeat;
+    background-image: -webkit-gradient(linear,left top,left bottom,from(#ccc),to(#ccc)),-webkit-gradient(linear,left top,left bottom,from(transparent),to(transparent));
+    background-image: linear-gradient(to bottom,#ccc,#ccc),linear-gradient(to bottom,transparent,transparent);
+    background-size: 0 1px,100% 1px;
+    background-position: 50% 100%,50% 100%;
+    -webkit-transition: all .35s ease-in-out;
+    transition: all .35s ease-in-out;
+    font-size: .875rem;
+    resize: none;
+    font-family: "Open Sans", sans-serif;
+}

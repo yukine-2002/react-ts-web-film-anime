@@ -122,6 +122,7 @@ export const RANKINGS = [
   },
 ];
 export interface comment {
+  fid? :string;
   mid: string;
   uid: string;
   content: string;

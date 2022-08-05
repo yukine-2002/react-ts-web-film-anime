@@ -1,6 +1,9 @@
 .CollectionComment {
     margin: 10px 0;
 }
+.content-header-right {
+    box-shadow: unset;
+}
 .CollectionComment .profile-form {
     position: relative;
 }
@@ -11,7 +14,7 @@
 
 .CollectionComment .profile-form h3  {
   margin: 5px 0;
-  font-size: 1.1rem;
+  font-size: 0.9rem;
   color: rgb(217, 229, 240);
 }
 .CollectionComment .form-input p {

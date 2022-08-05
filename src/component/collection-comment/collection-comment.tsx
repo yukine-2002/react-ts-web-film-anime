@@ -1,5 +1,6 @@
 import { doc, getDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { firestore } from "../../firebase/firebase";
 import { user } from "../../redux/auth/auth.action";
 import { comment } from "../../utils/type";
@@ -12,6 +13,7 @@ interface tUserComment {
 
 const CollectionComment = ({ cm }: { cm: comment }) => {
   const [selectUserCm, setSelectUser] = useState<tUserComment>();
+  const nav= useNavigate()
   const getUser = async () => {
     if (cm.uid) {
       const postRef = doc(firestore, "users", cm.uid);
@@ -28,6 +30,9 @@ const CollectionComment = ({ cm }: { cm: comment }) => {
       });
     }
   };
+  const handleProfile = (id:string) => {
+    nav(`/profile/${id}`)
+  }
   useEffect(() => {
     getUser()
   },[cm])
@@ -41,7 +46,7 @@ const CollectionComment = ({ cm }: { cm: comment }) => {
           />
 
           <div className="form-input">
-            <h3>{selectUserCm?.user?.name!}</h3>
+            <h3 style={{cursor : 'pointer'}} onClick={() => handleProfile(selectUserCm?.user.uid!)}>{selectUserCm?.user?.name!}</h3>
             <p>
              {selectUserCm?.comment?.content!}
             </p>

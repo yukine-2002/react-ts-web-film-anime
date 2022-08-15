@@ -6,7 +6,7 @@ const DropdownSearch = ({ dataSearch }: { dataSearch: Anime[] }) => {
     const nav = useNavigate();
 
     const handlePath = (slug: string, name: string) => {
-        nav(`/watch/${slug}/${name}`);
+        nav(`anime/${slug}/${name}`);
       };
   return (
     <div className="dropdown_search">

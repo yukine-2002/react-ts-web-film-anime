@@ -11,7 +11,7 @@ a {
   color: #fff;
 }
 body {
-  background: linear-gradient(to top left, #002836 7%, #000000 138%);
+  background: linear-gradient(0, #002836 7%, #000000 138%);
   font-family: "Open Sans", sans-serif;
 }
 /* #303030 */

@@ -41,8 +41,8 @@ const HomePage = () => {
   const selectAnimeSlideInfo = useAppSelector(
     (state) => state.collection.animeInfoSlide
   );
-  console.log(SlideData)
   const selectAnimeRank = useAppSelector((state) => state.collection.animeRank);
+
   useEffect(() => {
     dispatch(fetchAnimeInfoSlide(SlideData!) as any);
   }, [isSuccessDataSl]);
@@ -62,8 +62,8 @@ const HomePage = () => {
           <div>
             <div className="slide p-l-r m-top-100 m-bottom-50">
               <SlickCarousel setting={settingSlide} className="Slider-slick-sl">
-                {selectAnimeSlideInfo.map((item,index) => (
-                  <ItemSliderHeader key={index} item={item} />
+                {selectAnimeSlideInfo.map((item) => (
+                  <ItemSliderHeader key={item.slug} item={item} />
                 ))}
               </SlickCarousel>
             </div>
@@ -75,9 +75,9 @@ const HomePage = () => {
               <div className="slick-slider-trending">
                 {recentlyData
                   .filter((item, index) => index <= 14)
-                  .map((item,index) => (
+                  .map((item) => (
                     <Item
-                      key={index}
+                      key={item.slug}
                       anime={item}
                       onClick={() =>
                         handlePath(nav, item.slug, item.latestEpisode!.name)
@@ -95,17 +95,18 @@ const HomePage = () => {
                 setting={settings}
                 className="slick-slider-youlike"
               >
-                {RecommendedData.map((item,index) => (
+                {RecommendedData.map((item) => (
                   <Item
-                    key={index}
+                    key={item.slug}
                     anime={item}
                     onClick={() => handlePathInfo(nav, item.slug)}
                   />
                 ))}
               </SlickCarousel>
             </div>
+
             {listLocalStorage ? (
-              <div className="watch p-l-r m-bottom-50">
+              <div className="watch p-l-r m-top-50 m-bottom-50">
                 <div className="title m-bottom-50">
                   <h3>Xem tiếp</h3>
                 </div>
@@ -114,9 +115,9 @@ const HomePage = () => {
                   className="slick-slider-watch"
                 >
                   {listLocalStorage ? (
-                    listLocalStorage.map((item,index) => (
+                    listLocalStorage.map((item) => (
                       <Item
-                        key={index}
+                        key={item.slug}
                         anime={item}
                         onClick={() => handlePath(nav, item.slug, item.time)}
                       />
@@ -138,12 +139,8 @@ const HomePage = () => {
                 setting={settingsRcm}
                 className="slick-slider-recommender"
               >
-                {selectAnimeRank.map((item,index) => (
-                  <ItemRecommended
-                    key={index}
-                    item={item}
-                    onClick={() => handlePathInfo(nav, item.slug)}
-                  />
+                {selectAnimeRank.map((item) => (
+                  <ItemRecommended key={item.slug} item={item}  onClick={() => handlePathInfo(nav, item.slug)} />
                 ))}
               </SlickCarousel>
             </div>
@@ -153,9 +150,9 @@ const HomePage = () => {
                 <h3>Movie</h3>
               </div>
               <SlickCarousel setting={settings} className="slick-slider-movie">
-                {MoveData.map((item,index) => (
+                {MoveData.map((item) => (
                   <ItemSlideMovie
-                    key={index}
+                    key={item.slug}
                     anime={item}
                     onClick={() => handlePathInfo(nav, item.slug)}
                   />

@@ -20,6 +20,7 @@ export const fetchAnimeRank = (Rank: Anime[]) => {
     return async (dispatch: Dispatch<actions>) => {
         try {
             let res = await Promise.all(Rank!.map(e => getInfo(e.slug)))
+            res = res.filter(item => item !== undefined)
             let resJson = await Promise.all(res.map(e => { return e }))
             dispatch({
                 type: CollectionActionTypes.LOADING_ANIME_RANKING,
@@ -35,6 +36,7 @@ export const fetchAnimeInfoSlide = (SlideData: Anime[]) => {
     return async (dispatch: Dispatch<actions>) => {
         try {
             let res = await Promise.all(SlideData!.map(e => getInfo(e.slug)))
+           
             let resJson = await Promise.all(res.map(e => { return e }))
             dispatch({
                 type: CollectionActionTypes.LOADING_ANIME_INFO_SLIDE,

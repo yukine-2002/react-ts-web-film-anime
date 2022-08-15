@@ -58,14 +58,20 @@ const VideoPlayer = ({ source,info }: propVideo) => {
       setPlaying(true);
     }
   };
-
   const handleMoveOver = () => {
     videoPlayerRef.current?.children[2].classList.add("active");
   };
+  const handleMouseMove = () => {
+    videoPlayerRef.current?.children[2].classList.add("active");
+    setTimeout(() => {
+      videoPlayerRef.current?.children[2].classList.remove("active");
+    },10000)
+  }
   const handleMoveLeave = () => {
     if (playing) {
       if (videoPlayerRef.current?.children[3].classList.contains("active")) {
         videoPlayerRef.current?.children[2].classList.add("active");
+        
       } else {
         videoPlayerRef.current?.children[2].classList.remove("active");
       }
@@ -105,7 +111,6 @@ const VideoPlayer = ({ source,info }: propVideo) => {
     } else {
       setStateVolume("volume_up");
     }
-
     setValueVolume(parseInt(e.target.value));
     mainVideoRef.current!.volume = valueVolume / 100;
   };
@@ -136,10 +141,21 @@ const VideoPlayer = ({ source,info }: propVideo) => {
       screenfull.toggle(refContainer.current);
     }
   };
-  
+  const onTouchStart = ()=>{
+    videoPlayerRef.current?.children[2].classList.add("active");
+      setTimeout(() => {
+        videoPlayerRef.current?.children[2].classList.remove("active");
+      },5000)
+  }
+  const onTouchMove = ()=>{
+    if(playing){
+      videoPlayerRef.current?.children[2].classList.add("active");
+    }else{
+      videoPlayerRef.current?.children[2].classList.remove("active");
+    }
+  }
   const storeVideo = ()=> {
     const {thumbnail, ...rest } = info!;
-   
     Store.update(
       "recent",
       { id: info?.id },
@@ -149,9 +165,23 @@ const VideoPlayer = ({ source,info }: propVideo) => {
         time: source!.full_name,
       }
     );   
-   
   }
-
+  useEffect(()=> {
+    var playPromise = mainVideoRef.current!.play();
+    if (playPromise !== undefined) {
+      playPromise.then(_ => {
+        // Automatic playback started!
+        // Show playing UI.
+        // We can now safely pause video...
+        mainVideoRef.current!.pause();
+      })
+      .catch(error => {
+        // Auto-play was prevented
+        // Show paused UI.
+      });
+    }
+  },[])
+  
   return (
     <div className="container" ref={refContainer}>
       <div
@@ -170,7 +200,10 @@ const VideoPlayer = ({ source,info }: propVideo) => {
           onSuspend = {() => console.log("onSuspend")}
           onWaiting = {() =>setCanPlay(false)}
           onCanPlay={()=> setCanPlay(true)}
+          onMouseMove={handleMouseMove}
           onTimeUpdate={(e) => timeUpdate(e)}
+          onTouchStart={onTouchStart}
+          onTouchMove={onTouchMove}
           onLoadedData={(e) => {
             setDuration(e.currentTarget.duration)
           } }

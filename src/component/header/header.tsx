@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import { useSearch } from "../../utils/useFetchSerice";
 import DropdownSearch from "../dropdown-search/dropdown-search";
 import { Spinner } from "../lazyLoading/lazyLoading";
-import { useAppDispatch, useAppSelector } from "../../redux/useTypeSelector";
+import { useAppSelector } from "../../redux/useTypeSelector";
 import AuthDropDown from "../auth-dropdown/auth-dropdown";
 
 const Header = () => {

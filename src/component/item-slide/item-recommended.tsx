@@ -8,7 +8,7 @@ interface typeProps {
 }
 
 const ItemRecommended = ({ item , onClick}: typeProps) => {
-
+  
   return (
     <div className="item_recommended" onClick={onClick}>
       <div className="item_recommended-img">

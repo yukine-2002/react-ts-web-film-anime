@@ -1,173 +1,220 @@
-import SlickCarousel from "../../component/slick-carousel/slick-carousel";
-import ItemSlideMovie from "../../component/item-slide/item-slide-movie";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import { useNavigate } from "react-router-dom";
+import "./page.style.css";
+import slide from "../../assests/bg-editter.png";
+import ItemMedium from "../../component/item-slide/item-medium";
 import {
-  useFetchMove,
+  useFetchNewChapStory,
+  useFetchNewStory,
   useFetchRankDay,
   useFetchRecently,
   useFetchRecommender,
   useFetchSlide,
+  useFetchStoryComplete,
+  useFetchStoryRecommender,
 } from "../../utils/useFetchSerice";
-import { Spinner } from "../../component/lazyLoading/lazyLoading";
+import SlickCarousel from "../../component/slick-carousel/slick-carousel";
+import {
+  settingCustom,
+  settingItem,
+  settings,
+  settingsRcm,
+} from "../../utils/settingCarousel";
 import Item from "../../component/item-slide/item";
-import ItemSliderHeader from "../../component/item-slide/item-slide-header";
-import { useEffect } from "react";
-import { Anime } from "../../utils/type";
-import { handlePath, handlePathInfo } from "../../utils/service";
-import ItemRecommended from "../../component/item-slide/item-recommended";
+import { useLocation, useNavigate } from "react-router-dom";
+import { Spinner } from "../../component/lazyLoading/lazyLoading";
 import { useAppDispatch, useAppSelector } from "../../redux/useTypeSelector";
+import { useEffect } from "react";
 import {
   fetchAnimeInfoSlide,
   fetchAnimeRank,
 } from "../../redux/collection/collection.actions";
-import {
-  settings,
-  settingSlide,
-  settingsRcm,
-} from "../../utils/settingCarousel";
-
+import ItemSliderHeader from "../../component/item-slide/item-slide-header";
+import ItemRecommended from "../../component/item-slide/item-recommended";
 const HomePage = () => {
   const nav = useNavigate();
-  const { data: recentlyData, isSuccess: isRecenLoading } = useFetchRecently();
+  const { pathname } = useLocation();
+  const handlePathNameAnime = (slug: string) => {
+    if (pathname.includes("anime")) {
+      nav(`${slug}`);
+    } else {
+      nav(`anime/${slug}`);
+    }
+  };
+  const { data: dataStoryRecommender, isSuccess: isSsStoryRecommender } =
+    useFetchStoryRecommender();
+  const { data: dataStoryComplete, isSuccess: isSsStoryComplete } =
+    useFetchStoryComplete();
+  const { data: dataNewStory, isSuccess: isSsNewStory } = useFetchNewStory();
   const { data: RecommendedData, isSuccess: isRecommended } =
     useFetchRecommender();
-  const { data: MoveData, isSuccess: isMovie } = useFetchMove();
-  const { data: SlideData, isSuccess: isSuccessDataSl } = useFetchSlide();
-  const { data: RankDayData, isSuccess: isSuccessDataRD } = useFetchRankDay();
-  const listLocalStorage: Anime[] = JSON.parse(localStorage.getItem("recent")!);
-  const dispatch = useAppDispatch();
+
+  const { data: recentlyData, isSuccess: isRecenLoading } = useFetchRecently();
   const selectAnimeSlideInfo = useAppSelector(
     (state) => state.collection.animeInfoSlide
   );
-  console.log(SlideData)
+  const { data: RankDayData, isSuccess: isSuccessDataRD } = useFetchRankDay();
+  const { data: dataNewChapStory, isSuccess: isSsNewChapStory } =
+    useFetchNewChapStory();
   const selectAnimeRank = useAppSelector((state) => state.collection.animeRank);
+  const { data: SlideData, isSuccess: isSuccessDataSl } = useFetchSlide();
+  const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(fetchAnimeInfoSlide(SlideData!) as any);
-  }, [isSuccessDataSl]);
-
-  useEffect(() => {
     dispatch(fetchAnimeRank(RankDayData!) as any);
-  }, [isSuccessDataRD]);
-
+  }, [isSuccessDataSl, isSuccessDataRD]);
+  
   return (
-    <div>
-      <div className="body">
-        {isSuccessDataSl &&
-        isRecenLoading &&
-        isRecommended &&
-        isSuccessDataRD &&
-        isMovie ? (
-          <div>
-            <div className="slide p-l-r m-top-100 m-bottom-50">
-              <SlickCarousel setting={settingSlide} className="Slider-slick-sl">
-                {selectAnimeSlideInfo.map((item,index) => (
-                  <ItemSliderHeader key={index} item={item} />
-                ))}
-              </SlickCarousel>
+    <div className="homepage">
+      {isSsStoryRecommender &&
+      isRecommended &&
+      isRecenLoading &&
+      isSsNewStory &&
+      isSsStoryComplete &&
+      isSuccessDataRD &&
+      isSsNewChapStory ? (
+        <div className="container">
+          <div className="section-slide">
+            <img src={slide} alt="" />
+            <div className="content">
+              <h1>WELCOME TO</h1>
+              <span>Anime Manga</span>
+              {/* <div className="button-r">
+                <button>ANIME</button>
+                <button>MANGA</button>
+              </div> */}
             </div>
-
-            <div className="trending p-l-r m-top-50 m-bottom-50">
-              <div className="title m-bottom-50">
-                <h3>Phim mới cập nhật</h3>
-              </div>
-              <div className="slick-slider-trending">
-                {recentlyData
-                  .filter((item, index) => index <= 14)
-                  .map((item,index) => (
-                    <Item
-                      key={index}
-                      anime={item}
-                      onClick={() =>
-                        handlePath(nav, item.slug, item.latestEpisode!.name)
-                      }
-                    />
-                  ))}
-              </div>
-            </div>
-
-            <div className="youlike p-l-r m-top-50 m-bottom-50">
-              <div className="title m-bottom-50">
-                <h3>Thịnh hành</h3>
-              </div>
-              <SlickCarousel
-                setting={settings}
-                className="slick-slider-youlike"
-              >
-                {RecommendedData.map((item,index) => (
-                  <Item
-                    key={index}
-                    anime={item}
-                    onClick={() => handlePathInfo(nav, item.slug)}
-                  />
-                ))}
-              </SlickCarousel>
-            </div>
-            {listLocalStorage ? (
-              <div className="watch p-l-r m-bottom-50">
+          </div>
+          <div className="section-recommender">
+            <SlickCarousel setting={settingCustom} className="Slider-slick-sl">
+              {dataStoryRecommender?.map((item) => (
+                <ItemMedium key={item.name} item={item} />
+              ))}
+            </SlickCarousel>
+          </div>
+          <div className="body section-container">
+            <div className="containers">
+              <div className="hot-anime">
                 <div className="title m-bottom-50">
-                  <h3>Xem tiếp</h3>
+                  <h3>Anime Thịnh hành</h3>
                 </div>
                 <SlickCarousel
                   setting={settings}
-                  className="slick-slider-watch"
+                  className="slick-slider-youlike"
                 >
-                  {listLocalStorage ? (
-                    listLocalStorage.map((item,index) => (
+                  {RecommendedData?.map((item) => (
+                    <Item
+                      key={item.slug}
+                      anime={item}
+                      onClick={() => handlePathNameAnime(item.slug)}
+                    />
+                  ))}
+                </SlickCarousel>
+              </div>
+              <div className="update-anime">
+                <div className="title m-top-50 m-bottom-50">
+                  <h3>Anime Đang cập nhật</h3>
+                </div>
+                <SlickCarousel
+                  setting={settings}
+                  className="slick-slider-youlike"
+                >
+                  {recentlyData?.map((item) => (
+                    <Item
+                      key={item.slug}
+                      anime={item}
+                      onClick={() => handlePathNameAnime(item.slug)}
+                    />
+                  ))}
+                </SlickCarousel>
+              </div>
+              <div className="slide p-l-r m-top-50 m-bottom-50">
+                <SlickCarousel
+                  setting={settingItem}
+                  className="Slider-slick-sl"
+                >
+                  {selectAnimeSlideInfo.map((item, index) => (
+                    <ItemSliderHeader key={index} item={item} />
+                  ))}
+                </SlickCarousel>
+              </div>
+              <div className="newUpdate p-l-r m-top-50 m-bottom-50">
+                <div className="title m-bottom-50">
+                  <h3>Manga hot</h3>
+                </div>
+                <SlickCarousel
+                  setting={settingCustom}
+                  className="Slider-slick-sl"
+                >
+                  {dataNewStory?.map((item) => (
+                    <ItemMedium key={item.name} item={item} />
+                  ))}
+                </SlickCarousel>
+              </div>
+              <div className="story-complete p-l-r m-top-50 m-bottom-50">
+                <div className="title m-bottom-50">
+                  <h3>Manga đã hoàn thành</h3>
+                </div>
+                <div className="slick-slider-trending">
+                  {dataStoryComplete
+                    ?.filter((_, index) => index < 16)
+                    .map((item) => (
+                      <ItemMedium key={item.slug} item={item} />
+                    ))}
+                </div>
+              </div>
+              <div className="recommended p-l-r m-bottom-50">
+                <div className="title m-bottom-50">
+                  <h3>Đề xuất cho bạn</h3>
+                </div>
+                <SlickCarousel
+                  setting={settingsRcm}
+                  className="slick-slider-recommender"
+                >
+                  {selectAnimeRank.map((item, index) => (
+                    <ItemRecommended
+                      key={index}
+                      item={item}
+                      onClick={() => handlePathNameAnime(item.slug)}
+                    />
+                  ))}
+                </SlickCarousel>
+              </div>
+              <div className="newUpdate p-l-r m-bottom-50">
+                <div className="title m-bottom-50">
+                  <h3>Manga mới cập nhật</h3>
+                </div>
+                <div className="slick-slider-trending">
+                  {dataNewChapStory
+                    ?.filter((_, index) => index < 16)
+                    .map((item) => (
+                      <ItemMedium key={item.slug} item={item} />
+                    ))}
+                </div>
+              </div>
+
+              <div className="trending p-l-r m-top-50 m-bottom-50">
+                <div className="title m-bottom-50">
+                  <h3>Anime mới cập nhật</h3>
+                </div>
+                <div className="slick-slider-trending">
+                  {recentlyData
+                    .filter((item, index) => index <= 14)
+                    .map((item, index) => (
                       <Item
                         key={index}
                         anime={item}
-                        onClick={() => handlePath(nav, item.slug, item.time)}
+                        onClick={() => handlePathNameAnime(item.slug)}
                       />
-                    ))
-                  ) : (
-                    <Spinner />
-                  )}
-                </SlickCarousel>
+                    ))}
+                </div>
               </div>
-            ) : (
-              ""
-            )}
-
-            <div className="recommended p-l-r m-top-50 m-bottom-50">
-              <div className="title m-bottom-50">
-                <h3>Đề xuất cho bạn</h3>
-              </div>
-              <SlickCarousel
-                setting={settingsRcm}
-                className="slick-slider-recommender"
-              >
-                {selectAnimeRank.map((item,index) => (
-                  <ItemRecommended
-                    key={index}
-                    item={item}
-                    onClick={() => handlePathInfo(nav, item.slug)}
-                  />
-                ))}
-              </SlickCarousel>
-            </div>
-
-            <div className="movie p-l-r m-top-50 m-bottom-50">
-              <div className="title m-bottom-50">
-                <h3>Movie</h3>
-              </div>
-              <SlickCarousel setting={settings} className="slick-slider-movie">
-                {MoveData.map((item,index) => (
-                  <ItemSlideMovie
-                    key={index}
-                    anime={item}
-                    onClick={() => handlePathInfo(nav, item.slug)}
-                  />
-                ))}
-              </SlickCarousel>
             </div>
           </div>
-        ) : (
-          <Spinner />
-        )}
-      </div>
+        </div>
+      ) : (
+        <Spinner timeLoading={100000} />
+      )}
     </div>
   );
 };
+
 export default HomePage;

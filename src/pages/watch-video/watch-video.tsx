@@ -29,7 +29,7 @@ const WatchVideo = () => {
       ).join("")
     );
   }
-
+  console.log(source?.videoSource)
   return (
     <div className="body">
       <div className="video-container">

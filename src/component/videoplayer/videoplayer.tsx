@@ -11,20 +11,22 @@ import { AnimeInfo, Source } from "../../utils/type";
 import { Spinner } from "../lazyLoading/lazyLoading";
 
 interface propVideo {
-  info? : AnimeInfo,
-  source?: Source
+  info?: AnimeInfo;
+  source?: Source;
 }
 
-const VideoPlayer = ({ source,info }: propVideo) => {
+const VideoPlayer = ({ source, info }: propVideo) => {
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [progress_bar, setProgress_bar] = useState(0);
-  const [playing, setPlaying] = useState(false);  const [stateVolum, setStateVolume] = useState<string>(
+  const [playing, setPlaying] = useState(false);
+  const [stateVolum, setStateVolume] = useState<string>(
     "volume_up" || "volume_down" || "volume_off"
   );
+  const [error, setError] = useState<boolean>(false);
   const [valueVolume, setValueVolume] = useState(80);
   const [timeShow, setTimeShow] = useState<string>("0:00");
-  const [canPlay,setCanPlay] = useState(false)
+  const [canPlay, setCanPlay] = useState(false);
   const mainVideoRef = useRef<HTMLVideoElement | null>(null);
   const videoPlayerRef = useRef<HTMLDivElement | null>(null);
   const progressAreatime = useRef<HTMLDivElement | null>(null);
@@ -33,18 +35,18 @@ const VideoPlayer = ({ source,info }: propVideo) => {
   const play_pause = useRef<HTMLLIElement | null>(null);
   const volume_range = useRef<HTMLInputElement | null>(null);
   const refContainer = useRef<HTMLDivElement | null>(null);
-  
+
   useEffect(() => {
-    if(mainVideoRef.current){
-      mainVideoRef.current.src = source?.videoSource!
+    if (mainVideoRef.current) {
+      mainVideoRef.current.src = source?.videoSource!;
       mainVideoRef?.current!.pause();
       play_pause.current!.innerHTML = "play_arrow";
       play_pause.current!.title = "play";
       setPlaying(false);
-      console.log(source?.videoSource)
+      console.log(source?.videoSource);
     }
-  },[source?.videoSource])
-  
+  }, [source?.videoSource]);
+
   const handleVideo = () => {
     if (playing) {
       mainVideoRef?.current!.pause();
@@ -65,13 +67,12 @@ const VideoPlayer = ({ source,info }: propVideo) => {
     videoPlayerRef.current?.children[2].classList.add("active");
     setTimeout(() => {
       videoPlayerRef.current?.children[2].classList.remove("active");
-    },10000)
-  }
+    }, 10000);
+  };
   const handleMoveLeave = () => {
     if (playing) {
       if (videoPlayerRef.current?.children[3].classList.contains("active")) {
         videoPlayerRef.current?.children[2].classList.add("active");
-        
       } else {
         videoPlayerRef.current?.children[2].classList.remove("active");
       }
@@ -101,7 +102,7 @@ const VideoPlayer = ({ source,info }: propVideo) => {
 
     mainVideoRef.current!.currentTime =
       (clickOffset / progressWith) * vidoeDuration;
-      setCanPlay(false)
+    setCanPlay(false);
   };
   const changeVolume = (e: ChangeEvent<HTMLInputElement>) => {
     if (valueVolume === 0) {
@@ -141,21 +142,21 @@ const VideoPlayer = ({ source,info }: propVideo) => {
       screenfull.toggle(refContainer.current);
     }
   };
-  const onTouchStart = ()=>{
+  const onTouchStart = () => {
     videoPlayerRef.current?.children[2].classList.add("active");
-      setTimeout(() => {
-        videoPlayerRef.current?.children[2].classList.remove("active");
-      },5000)
-  }
-  const onTouchMove = ()=>{
-    if(playing){
+    setTimeout(() => {
+      videoPlayerRef.current?.children[2].classList.remove("active");
+    }, 5000);
+  };
+  const onTouchMove = () => {
+    if (playing) {
       videoPlayerRef.current?.children[2].classList.add("active");
-    }else{
+    } else {
       videoPlayerRef.current?.children[2].classList.remove("active");
     }
-  }
-  const storeVideo = ()=> {
-    const {thumbnail, ...rest } = info!;
+  };
+  const storeVideo = () => {
+    const { thumbnail, ...rest } = info!;
     Store.update(
       "recent",
       { id: info?.id },
@@ -164,167 +165,185 @@ const VideoPlayer = ({ source,info }: propVideo) => {
         thumbnail: source?.thumbnail_medium,
         time: source!.full_name,
       }
-    );   
-  }
-  useEffect(()=> {
-    var playPromise = mainVideoRef.current!.play();
-    if (playPromise !== undefined) {
-      playPromise.then(_ => {
-        // Automatic playback started!
-        // Show playing UI.
-        // We can now safely pause video...
-        mainVideoRef.current!.pause();
-      })
-      .catch(error => {
-        // Auto-play was prevented
-        // Show paused UI.
-      });
+    );
+  };
+  useEffect(() => {
+    if (mainVideoRef.current) {
+      var playPromise = mainVideoRef.current!.play();
+      if (playPromise !== undefined) {
+        playPromise
+          .then((_) => {
+            // Automatic playback started!
+            // Show playing UI.
+            // We can now safely pause video...
+            mainVideoRef.current!.pause();
+          })
+          .catch((error) => {
+            // Auto-play was prevented
+            // Show paused UI.
+          });
+      }
     }
-  },[])
-  
+  }, []);
+  console.log(error)
   return (
     <div className="container" ref={refContainer}>
-      <div
-        id="video_player"
-        ref={videoPlayerRef}
-        onMouseOver={handleMoveOver}
-        onMouseLeave={handleMoveLeave}
-      >
-        <video
-          preload="none"
-          id="main-video"
-          ref={mainVideoRef}
-          onClick={handleVideo}
-          onLoadStart={storeVideo}
-          onError = {() => console.log("error")}
-          onSuspend = {() => console.log("onSuspend")}
-          onWaiting = {() =>setCanPlay(false)}
-          onCanPlay={()=> setCanPlay(true)}
-          onMouseMove={handleMouseMove}
-          onTimeUpdate={(e) => timeUpdate(e)}
-          onTouchStart={onTouchStart}
-          onTouchMove={onTouchMove}
-          onLoadedData={(e) => {
-            setDuration(e.currentTarget.duration)
-          } }
-          playsInline>
-          <source  src={`${source?.videoSource}`} type="video/mp4" />
-        </video>
-             
-        <div className="progressAreaTime" ref={progressAreatime}>
-          {timeShow}
-        </div>
-        <div className="controls">
-          <div
-            className="progress-area"
-            ref={progressArea}
-            onMouseMove={(e) => showTimeHover(e)}
-            onMouseLeave={(e) => offTimeHover(e)}
-            onClick={(e) => changTime(e)}
+      {!error ? (
+        <div
+          id="video_player"
+          ref={videoPlayerRef}
+          onMouseOver={handleMoveOver}
+          onMouseLeave={handleMoveLeave}
+        >
+          <video
+            preload="none"
+            id="main-video"
+            ref={mainVideoRef}
+            onClick={handleVideo}
+            onLoadStart={storeVideo}
+            onError={() => setError(true)}
+            onSuspend={() => console.log("onSuspend")}
+            onWaiting={() => setCanPlay(false)}
+            onCanPlay={() => {
+              setCanPlay(true) 
+              setError(false)
+            }}
+            onMouseMove={handleMouseMove}
+            onTimeUpdate={(e) => timeUpdate(e)}
+            onTouchStart={onTouchStart}
+            onTouchMove={onTouchMove}
+            onLoadedData={(e) => {
+              setDuration(e.currentTarget.duration);
+            }}
+            playsInline
           >
-            <div className="progress-bar" style={{ width: `${progress_bar}%` }}>
-              <span></span>
-            </div>
+            <source src={`${source?.videoSource}`} type="video/mp4" />
+          </video>
+
+          <div className="progressAreaTime" ref={progressAreatime}>
+            {timeShow}
           </div>
-          <div className="controls-list">
-          
-            <div className="controls-left">
-              <span className="icons">
-                <i
-                  onClick={() => (mainVideoRef.current!.currentTime -= 10)}
-                  className="material-icons fast-rewind"
-                >
-                  {" "}
-                  replay_10{" "}
-                </i>
-              </span>
-              <span className="icons">
-                <i
-                  ref={play_pause}
-                  onClick={handleVideo}
-                  className="material-icons play_pause"
-                >
-                  {" "}
-                  play_arrow{" "}
-                </i>
-              </span>
-              <span className="icons">
-                <i
-                  onClick={() => (mainVideoRef.current!.currentTime += 10)}
-                  className="material-icons fast-forward"
-                >
-                  {" "}
-                  forward_10{" "}
-                </i>
-              </span>
-              <span className="icons">
-                <i className="material-icons volume"> {stateVolum} </i>
-                <input
-                  type="range"
-                  min="0"
-                  max="100"
-                  value={valueVolume}
-                  className="volume_range"
-                  ref={volume_range}
-                  onChange={(e) => changeVolume(e)}
-                />
-              </span>
-              <div className="timer">
-                <span className="current">{convetTime(currentTime)}</span>/
-                <span className="duration">{convetTime(duration)}</span>
+          <div className="controls">
+            <div
+              className="progress-area"
+              ref={progressArea}
+              onMouseMove={(e) => showTimeHover(e)}
+              onMouseLeave={(e) => offTimeHover(e)}
+              onClick={(e) => changTime(e)}
+            >
+              <div
+                className="progress-bar"
+                style={{ width: `${progress_bar}%` }}
+              >
+                <span></span>
               </div>
             </div>
+            <div className="controls-list">
+              <div className="controls-left">
+                <span className="icons">
+                  <i
+                    onClick={() => (mainVideoRef.current!.currentTime -= 10)}
+                    className="material-icons fast-rewind"
+                  >
+                    {" "}
+                    replay_10{" "}
+                  </i>
+                </span>
+                <span className="icons">
+                  <i
+                    ref={play_pause}
+                    onClick={handleVideo}
+                    className="material-icons play_pause"
+                  >
+                    {" "}
+                    play_arrow{" "}
+                  </i>
+                </span>
+                <span className="icons">
+                  <i
+                    onClick={() => (mainVideoRef.current!.currentTime += 10)}
+                    className="material-icons fast-forward"
+                  >
+                    {" "}
+                    forward_10{" "}
+                  </i>
+                </span>
+                <span className="icons">
+                  <i className="material-icons volume"> {stateVolum} </i>
+                  <input
+                    type="range"
+                    min="0"
+                    max="100"
+                    value={valueVolume}
+                    className="volume_range"
+                    ref={volume_range}
+                    onChange={(e) => changeVolume(e)}
+                  />
+                </span>
+                <div className="timer">
+                  <span className="current">{convetTime(currentTime)}</span>/
+                  <span className="duration">{convetTime(duration)}</span>
+                </div>
+              </div>
 
-            <div className="controls-right">
-              <span className="icons">
-                <i className="material-icons auto-play"> </i>
-              </span>
-              <span className="icons">
-                <i className="material-icons settingsBtn"> settings </i>
-              </span>
-              <span className="icons">
-                <i
-                  className="material-icons picture_in_picture"
-                  onClick={PictureinPicture}
-                >
-                  picture_in_picture_alt
-                </i>
-              </span>
-              <span className="icons">
-                <i
-                  className="material-icons fullscreen"
-                  ref={fullScreen}
-                  onClick={() => toggleFullScreen()}
-                >
-                  {" "}
-                  fullscreen{" "}
-                </i>
-              </span>
+              <div className="controls-right">
+                <span className="icons">
+                  <i className="material-icons auto-play"> </i>
+                </span>
+                <span className="icons">
+                  <i className="material-icons settingsBtn"> settings </i>
+                </span>
+                <span className="icons">
+                  <i
+                    className="material-icons picture_in_picture"
+                    onClick={PictureinPicture}
+                  >
+                    picture_in_picture_alt
+                  </i>
+                </span>
+                <span className="icons">
+                  <i
+                    className="material-icons fullscreen"
+                    ref={fullScreen}
+                    onClick={() => toggleFullScreen()}
+                  >
+                    {" "}
+                    fullscreen{" "}
+                  </i>
+                </span>
+              </div>
             </div>
           </div>
-        </div>
-        <div id="settings">
-          <div className="playback">
-            <span>Playback Speed</span>
-            <ul>
-              <li data-speed="0.25">0.25</li>
-              <li data-speed="0.5">0.5</li>
-              <li data-speed="0.75">0.75</li>
-              <li data-speed="1" className="active">
-                1
-              </li>
-              <li data-speed="1.25">1.25</li>
-              <li data-speed="1.5">1.5</li>
-              <li data-speed="1.75">1.75</li>
-            </ul>
+          <div id="settings">
+            <div className="playback">
+              <span>Playback Speed</span>
+              <ul>
+                <li data-speed="0.25">0.25</li>
+                <li data-speed="0.5">0.5</li>
+                <li data-speed="0.75">0.75</li>
+                <li data-speed="1" className="active">
+                  1
+                </li>
+                <li data-speed="1.25">1.25</li>
+                <li data-speed="1.5">1.5</li>
+                <li data-speed="1.75">1.75</li>
+              </ul>
+            </div>
+          </div>
+          <div
+            className="wait-video-can-play"
+            style={{ display: canPlay ? "none" : "flex" }}
+          >
+            <img src="https://cutewallpaper.org/21/loading-gif-transparent-background/Tag-For-Loading-Bar-Gif-Transparent-Loading-Gif-.gif" />
           </div>
         </div>
-        <div className="wait-video-can-play" style={{display : canPlay ? 'none' : 'flex'}}>
-          <img src="https://cutewallpaper.org/21/loading-gif-transparent-background/Tag-For-Loading-Bar-Gif-Transparent-Loading-Gif-.gif" />
+      ) : (
+        <div className="error_alert">
+          <p>Có lỗi xảy ra vui lòng thử lại sau hoặc f5 lại trang</p>
         </div>
-      </div>
+      )}
     </div>
   );
 };
 
-export default VideoPlayer
+export default VideoPlayer;

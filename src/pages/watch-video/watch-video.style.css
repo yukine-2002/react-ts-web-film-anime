@@ -6,6 +6,14 @@
   min-height: 100%;
   width: 100%;
 }
+.error_alert {
+  min-height: 100vh;
+  width: 100%;
+  color: red;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .container {
   position: relative;
   width: 100%;
@@ -265,7 +273,6 @@
   background-color: rgba(28, 28, 28, 0.9);
   border-radius: 20px;
 }
-
 
 .intro-content div {
   margin: 0 10px;

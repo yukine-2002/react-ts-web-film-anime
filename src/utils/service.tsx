@@ -28,10 +28,10 @@ interface SearchProps {
 }
 
 export const handlePath = (nav: any, slug: string, name: string) => {
-  nav(`anime/${slug}/${name}`);
+  nav(`${slug}/${name}`);
 };
 export const handlePathInfo = (nav: any, slug: string) => {
-  nav(`anime/${slug}`);
+  nav(`${slug}`);
 };
 
 

@@ -19,7 +19,7 @@ import {
 } from "../../utils/useFetchSerice";
 import ItemLarge from "../../component/item-slide/item-large";
 import SlickCarousel from "../../component/slick-carousel/slick-carousel";
-import { settings, settingSlide } from "../../utils/settingCarousel";
+import { settingCustom, settings, settingSlide } from "../../utils/settingCarousel";
 
 const StoryPage = () => {
   const dispatch = useAppDispatch();
@@ -84,36 +84,7 @@ const StoryPage = () => {
                 <h3>Truyện mới</h3>
               </div>
               <SlickCarousel
-                setting={{
-                  ...settings,
-                  slidesToShow: 8,
-                  responsive: [
-                    {
-                      breakpoint: 1460,
-                      settings: {
-                        slidesToShow: 6,
-                      },
-                    },
-                    {
-                      breakpoint: 1160,
-                      settings: {
-                        slidesToShow: 4,
-                      },
-                    },
-                    {
-                      breakpoint: 760,
-                      settings: {
-                        slidesToShow: 3,
-                      },
-                    },
-                    {
-                      breakpoint: 560,
-                      settings: {
-                        slidesToShow: 2,
-                      },
-                    },
-                  ],
-                }}
+                setting={settingCustom}
                 className="Slider-slick-sl"
               >
                 {selectNewStory?.map((item) => (
@@ -127,36 +98,7 @@ const StoryPage = () => {
                 <h3>Đừng bỏ lỡ</h3>
               </div>
               <SlickCarousel
-                setting={{
-                  ...settings,
-                  slidesToShow: 8,
-                  responsive: [
-                    {
-                      breakpoint: 1460,
-                      settings: {
-                        slidesToShow: 6,
-                      },
-                    },
-                    {
-                      breakpoint: 1160,
-                      settings: {
-                        slidesToShow: 4,
-                      },
-                    },
-                    {
-                      breakpoint: 760,
-                      settings: {
-                        slidesToShow: 3,
-                      },
-                    },
-                    {
-                      breakpoint: 560,
-                      settings: {
-                        slidesToShow: 2,
-                      },
-                    },
-                  ],
-                }}
+                setting={settingCustom}
                 className="Slider-slick-sl"
               >
                 {selectStoryRecommender?.map((item) => (

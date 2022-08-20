@@ -13,7 +13,7 @@ const Header = () => {
   const refDiv = useRef<HTMLDivElement | null>(null);
   const [isMobileDropdown, setIsMobileDropdown] = useState(false);
   const [isMobileBar, setIsMobileBar] = useState(false);
-  const [isDropdownAuth,setDropdownAuth] = useState(false)
+  const [isDropdownAuth, setDropdownAuth] = useState(false);
   const selectUser = useAppSelector((state) => state.auth!.currentUser);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [windowHeight, setWindowHeight] = useState(window.innerHeight);
@@ -91,10 +91,9 @@ const Header = () => {
             </Link>
           </div>
           <div className="navbar-item dropdown" onClick={handleDropDown}>
-            <Link to={``} className="disable ">
+            <Link to={`anime`} className="disable ">
               <span>Anime</span>
             </Link>
-            <CollectionDropDown isMobile={isMobileDropdown} />
           </div>
           <div className="navbar-item">
             <Link to={`story`}>
@@ -114,7 +113,7 @@ const Header = () => {
               isSuccess ? (
                 <DropdownSearch dataSearch={data.data} />
               ) : (
-                <div className="dropdown_search_loading">          
+                <div className="dropdown_search_loading">
                   <Spinner />
                 </div>
               )
@@ -124,12 +123,24 @@ const Header = () => {
           </div>
           {selectUser ? (
             <div className="auth_login">
-              <div className="img" onClick={() => setDropdownAuth(!isDropdownAuth)}>
-                <img src={selectUser?.img ? selectUser.img : `https://static.fullstack.edu.vn/static/media/fallback-avatar.155cdb2376c5d99ea151.jpg`} alt="" />
+              <div
+                className="img"
+                onClick={() => setDropdownAuth(!isDropdownAuth)}
+              >
+                <img
+                  src={
+                    selectUser?.img
+                      ? selectUser.img
+                      : `https://static.fullstack.edu.vn/static/media/fallback-avatar.155cdb2376c5d99ea151.jpg`
+                  }
+                  alt=""
+                />
               </div>
-              {
-                isDropdownAuth ?   <AuthDropDown setDropdownAuth={setDropdownAuth} /> : ''
-              }         
+              {isDropdownAuth ? (
+                <AuthDropDown setDropdownAuth={setDropdownAuth} />
+              ) : (
+                ""
+              )}
             </div>
           ) : (
             <div className="button-login">

@@ -56,7 +56,54 @@ export const settingSlide = {
   autoplay: true,
   autoplaySpeed: 25000,
 };
-
+export const settingItem = {
+  infinite: true,
+  speed: 3000,
+  slidesToShow: 2,
+  slidesToScroll: 1,
+  arrows: false,
+  autoplay: true,
+  autoplaySpeed: 25000,
+  responsive: [
+    {
+      breakpoint: 1260,
+      settings: {
+        slidesToShow: 1,
+        slidesToScroll: 1,
+      },
+    },
+  ],
+};
+export const settingCustom = {
+  ...settings,
+  slidesToShow: 8,
+  responsive: [
+    {
+      breakpoint: 1460,
+      settings: {
+        slidesToShow: 6,
+      },
+    },
+    {
+      breakpoint: 1160,
+      settings: {
+        slidesToShow: 4,
+      },
+    },
+    {
+      breakpoint: 760,
+      settings: {
+        slidesToShow: 3,
+      },
+    },
+    {
+      breakpoint: 560,
+      settings: {
+        slidesToShow: 2,
+      },
+    },
+  ],
+};
 export const settingsRcm = {
   infinite: true,
   slidesToShow: 4,
@@ -93,7 +140,6 @@ export const settingsRcm = {
     },
   ],
 };
-
 
 export const settingEpisode = {
   infinite: false,

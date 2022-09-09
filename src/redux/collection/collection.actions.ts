@@ -35,13 +35,16 @@ export const fetchAnimeRank = (Rank: Anime[]) => {
 export const fetchAnimeInfoSlide = (SlideData: Anime[]) => {
     return async (dispatch: Dispatch<actions>) => {
         try {
+
             let res = await Promise.all(SlideData!.map(e => getInfo(e.slug)))
-           
+
             let resJson = await Promise.all(res.map(e => { return e }))
+
             dispatch({
                 type: CollectionActionTypes.LOADING_ANIME_INFO_SLIDE,
                 payload: resJson
             })
+            
         } catch (err) {
             console.log(err)
         }

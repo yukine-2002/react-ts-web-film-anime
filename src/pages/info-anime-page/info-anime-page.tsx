@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { Navigate, useLocation, useNavigate, useParams } from "react-router-dom";
 import Comment from "../../component/comment/comment";
 import Episode from "../../component/episode/episode";
 import Item from "../../component/item-slide/item";
@@ -47,7 +47,9 @@ const InfoAnimePage = () => {
   }
   return (
     <div>
-      {isSuccess && isRecommended && isSuccessDataRD? (
+      {
+        data === undefined ? <Navigate to={"/error"} /> :
+      isSuccess && isRecommended && isSuccessDataRD ? (
         <div className="info-anime-page">
           <div className="bg-info-anime-page">
             <img src={data?.thumbnail} alt="" />

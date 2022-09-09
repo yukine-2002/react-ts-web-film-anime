@@ -14,6 +14,7 @@ import {
   newStory,
   rankDate,
   rankDayStory,
+  rankMonth,
   Search,
   storyComplete,
   storyHot,
@@ -53,6 +54,9 @@ export const useFetchSlide = () => {
 };
 export const useFetchRankDay = () => {
   return useQuery(["rankDay"], () => rankDate());
+};
+export const useFetchRankMonth = () => {
+  return useQuery(["rankMonth"], () => rankMonth());
 };
 export const useFetchList = ({ category, slug }: Props) => {
   const useFetch = ({ pageParam = 1 }) =>

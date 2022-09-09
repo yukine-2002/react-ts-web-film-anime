@@ -10,6 +10,7 @@ import { useAppDispatch, useAppSelector } from "./redux/useTypeSelector";
 import { setCurrentUser } from "./redux/auth/auth.action";
 import ReadStoryPage from "./pages/read-story-page/read-story-page";
 import Footer from "./component/footer/footer";
+import HandleError404 from "./pages/404/error-page";
 
 const HomePage = lazyLoading(() => import("./pages/home-page/home-page"))
 const AnimePage = lazyLoading(() => import("./pages/anime-page/anime-page"));
@@ -25,6 +26,7 @@ const InfoStoryPage = lazyLoading(
 const InfoAnimePage = lazyLoading(
   () => import("./pages/info-anime-page/info-anime-page")
 );
+
 
 
 function App() {
@@ -60,6 +62,7 @@ function App() {
         </Route> */}
        
         <Route path="story" element={<StoryPages />} />
+     
         <Route path="/story">
           <Route path=":slug" element={<InfoStoryPage />} />
           <Route path=":slug/:chap" element={<ReadStoryPage />} />
@@ -73,6 +76,7 @@ function App() {
           path="login"
           element={selectUser ? <Navigate to="/" /> : <LoginPage />}
         />
+        <Route path="error" element={<HandleError404 />} />
       </Routes>
     <Footer />
     </div>

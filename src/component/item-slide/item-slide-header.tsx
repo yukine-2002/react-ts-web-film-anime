@@ -12,13 +12,13 @@ const ItemSliderHeader = ({ item }: typeProps) => {
   return (
     <div className="item_slide_header">
       <div className="item_slide_header-img">
-        <img src={item.thumbnail} alt="" />
+        <img src={item?.thumbnail} alt="" />
         <div className="overlay"> </div>
       </div>
       <div className="item_slide_header-content">
         <div className="slide_content_left">
           <div className="slide_header-content-name-item">
-            <h4>{item.name}</h4>
+            <h4>{item?.name}</h4>
           </div>
           <div className="slide_header-icon-item">
             <div className="icon-item">
@@ -28,23 +28,23 @@ const ItemSliderHeader = ({ item }: typeProps) => {
               </div>
               <div className="episodes round-icon">
                 <i className="material-icons">schedule</i>
-                <span>{item.episodes.length} tập</span>
+                <span>{item?.episodes.length} tập</span>
               </div>
               <div className="genres round-icon">
                 <i className="material-icons">add_circle</i>
                 <p>
                   {" "}
-                  {item.genres.map((it, index) => (
+                  {item?.genres.map((it, index) => (
                     <span key={it.slug}>
                       {" "}
-                      {it.name} {index === item.genres.length - 1 ? ` ` : `-`}
+                      {it?.name} {index === item?.genres.length - 1 ? ` ` : `-`}
                     </span>
                   ))}
                 </p>
               </div>
             </div>
             <div className="slide_header-desc">
-              <p>{item.description}</p>
+              <p>{item?.description}</p>
             </div>
             <div className="slide_header-button">
               <button onClick={() => handlePath(nav, item.slug, item.name)}>

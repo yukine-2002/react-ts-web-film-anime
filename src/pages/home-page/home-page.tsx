@@ -5,6 +5,7 @@ import {
   useFetchNewChapStory,
   useFetchNewStory,
   useFetchRankDay,
+  useFetchRankMonth,
   useFetchRecently,
   useFetchRecommender,
   useFetchSlide,
@@ -41,7 +42,7 @@ const HomePage = () => {
   };
   const { data: dataStoryRecommender, isSuccess: isSsStoryRecommender } =
     useFetchStoryRecommender();
-  const { data: dataStoryComplete, isSuccess: isSsStoryComplete } =
+  const { data: dataStoryComplete, isSuccess: isSsStoryComplete  } =
     useFetchStoryComplete();
   const { data: dataNewStory, isSuccess: isSsNewStory } = useFetchNewStory();
   const { data: RecommendedData, isSuccess: isRecommended } =
@@ -51,12 +52,15 @@ const HomePage = () => {
   const selectAnimeSlideInfo = useAppSelector(
     (state) => state.collection.animeInfoSlide
   );
+  
   const { data: RankDayData, isSuccess: isSuccessDataRD } = useFetchRankDay();
+  const { data: rankMonthData, isSuccess: isSuccessRankMonth } = useFetchRankMonth();
   const { data: dataNewChapStory, isSuccess: isSsNewChapStory } =
     useFetchNewChapStory();
   const selectAnimeRank = useAppSelector((state) => state.collection.animeRank);
   const { data: SlideData, isSuccess: isSuccessDataSl } = useFetchSlide();
   const dispatch = useAppDispatch();
+  
   useEffect(() => {
     dispatch(fetchAnimeInfoSlide(SlideData!) as any);
     dispatch(fetchAnimeRank(RankDayData!) as any);
@@ -71,7 +75,7 @@ const HomePage = () => {
       isSsStoryComplete &&
       isSuccessDataRD &&
       isSsNewChapStory ? (
-        <div className="container">
+        <div className="containers">
           <div className="section-slide">
             <img src={slide} alt="" />
             <div className="content">
@@ -111,13 +115,13 @@ const HomePage = () => {
               </div>
               <div className="update-anime">
                 <div className="title m-top-50 m-bottom-50">
-                  <h3>Anime Đang cập nhật</h3>
+                  <h3>Anime Hot</h3>
                 </div>
                 <SlickCarousel
                   setting={settings}
                   className="slick-slider-youlike"
                 >
-                  {recentlyData?.map((item) => (
+                  {rankMonthData?.map((item) => (
                     <Item
                       key={item.slug}
                       anime={item}

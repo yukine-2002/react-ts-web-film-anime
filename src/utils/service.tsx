@@ -86,6 +86,11 @@ export const rankDate = async (): Promise<Anime[]> => {
   const { data } = await instance.get("/ranking/ngay");
   return data.data;
 };
+export const rankMonth = async (): Promise<Anime[]> => {
+  const { data } = await instance.get("/ranking/thang");
+  return data.data;
+};
+
 
 export const storyInstance = axios.create({
   baseURL : 'https://json-api-story.herokuapp.com/api/v2'
